@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:datex/features/unboarding/unboarding_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:datex/utils/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
+@RoutePage()
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -35,10 +36,12 @@ class _SplashPageState extends State<SplashPage> {
         });
       });
     });
-
-    Future.delayed(const Duration(milliseconds: 3500), () {
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const UnboardingScreen()), (e) => false);
-    });
+    if (mounted) {
+      Future.delayed(const Duration(milliseconds: 3500), () {
+        AutoRouter.of(context).popAndPush(const UnboardingRoute());
+        // AutoRouter.of(context).replaceNamed(UnboardingRoute.name);
+      });
+    }
   }
 
   @override

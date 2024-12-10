@@ -39,11 +39,15 @@ dependencies:
   video_player: ^2.9.2
   chewie: ^1.8.5
   url_launcher: ^6.3.1
+  auto_route: ^9.2.2
+  webview_flutter: ^4.10.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.14.2
+  auto_route_generator: ^9.0.0
+  build_runner: ^2.4.13
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -68,13 +72,61 @@ flutter:
     - assets/logo/
     - assets/video/
     - assets/images/
-
+    - assets/flags/
+  fonts:
+    - family: inter
+      fonts:
+          - asset: assets/fonts/inter/Inter_18pt-Regular.ttf
+          - asset: assets/fonts/inter/Inter_18pt-Bold.ttf
+          - asset: assets/fonts/inter/Inter_18pt-Light.ttf
+          - asset: assets/fonts/inter/Inter_18pt-Medium.ttf
+          - asset: assets/fonts/inter/Inter_18pt-SemiBold.ttf
+          - asset: assets/fonts/inter/Inter_18pt-ExtraBold.ttf
+          - asset: assets/fonts/inter/Inter_18pt-Black.ttf
+          - asset: assets/fonts/inter/Inter_18pt-Thin.ttf
+          - asset: assets/fonts/inter/Inter_18pt-Italic.ttf
+          - asset: assets/fonts/inter/Inter_18pt-BoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_18pt-LightItalic.ttf
+          - asset: assets/fonts/inter/Inter_18pt-MediumItalic.ttf
+          - asset: assets/fonts/inter/Inter_18pt-SemiBoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_18pt-ExtraBoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_18pt-BlackItalic.ttf
+          - asset: assets/fonts/inter/Inter_18pt-ThinItalic.ttf
+          - asset: assets/fonts/inter/Inter_24pt-Regular.ttf
+          - asset: assets/fonts/inter/Inter_24pt-Bold.ttf
+          - asset: assets/fonts/inter/Inter_24pt-Light.ttf
+          - asset: assets/fonts/inter/Inter_24pt-Medium.ttf
+          - asset: assets/fonts/inter/Inter_24pt-SemiBold.ttf
+          - asset: assets/fonts/inter/Inter_24pt-ExtraBold.ttf
+          - asset: assets/fonts/inter/Inter_24pt-Black.ttf
+          - asset: assets/fonts/inter/Inter_24pt-Thin.ttf
+          - asset: assets/fonts/inter/Inter_24pt-Italic.ttf
+          - asset: assets/fonts/inter/Inter_24pt-BoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_24pt-LightItalic.ttf
+          - asset: assets/fonts/inter/Inter_24pt-MediumItalic.ttf
+          - asset: assets/fonts/inter/Inter_24pt-SemiBoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_24pt-ExtraBoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_24pt-BlackItalic.ttf
+          - asset: assets/fonts/inter/Inter_24pt-ThinItalic.ttf
+          - asset: assets/fonts/inter/Inter_28pt-Regular.ttf
+          - asset: assets/fonts/inter/Inter_28pt-Bold.ttf
+          - asset: assets/fonts/inter/Inter_28pt-Light.ttf
+          - asset: assets/fonts/inter/Inter_28pt-Medium.ttf
+          - asset: assets/fonts/inter/Inter_28pt-SemiBold.ttf
+          - asset: assets/fonts/inter/Inter_28pt-ExtraBold.ttf
+          - asset: assets/fonts/inter/Inter_28pt-Black.ttf
+          - asset: assets/fonts/inter/Inter_28pt-Thin.ttf
+          - asset: assets/fonts/inter/Inter_28pt-Italic.ttf
+          - asset: assets/fonts/inter/Inter_28pt-BoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_28pt-LightItalic.ttf
+          - asset: assets/fonts/inter/Inter_28pt-MediumItalic.ttf
+          - asset: assets/fonts/inter/Inter_28pt-SemiBoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_28pt-ExtraBoldItalic.ttf
+          - asset: assets/fonts/inter/Inter_28pt-BlackItalic.ttf
+          - asset: assets/fonts/inter/Inter_28pt-ThinItalic.ttf
 
   uses-material-design: true
-  # fonts:
-  #   - family: inter
-  #     fonts:
-  #       - asset: assets/fonts/inter/
+ 
 
   # To add assets to your application, add an assets section, like this:
   # assets:

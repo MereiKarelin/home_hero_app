@@ -1,25 +1,36 @@
-import 'package:datex/features/splash/splash_screen.dart';
+import 'package:datex/utils/app_router.dart';
 
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+  MyApp({super.key});
+  final _appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DATeX',
+    return MaterialApp.router(
+      routerConfig: _appRouter.config(),
       theme: ThemeData(
         primaryColor: const Color.fromRGBO(13, 196, 48, 1),
         scaffoldBackgroundColor: Colors.white,
-        fontFamily: null, // Не используйте шрифт, который блокирует Material Icons
+        checkboxTheme: CheckboxThemeData(
+          checkColor: WidgetStateProperty.all(Colors.white),
+          fillColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const Color.fromRGBO(13, 196, 48, 1); // Цвет фона чекбокса, когда он выбран
+            }
+            return Colors.white; // Цвет фона чекбокса, когда он не выбран
+          }),
+        ),
+        fontFamily: null,
       ),
-      home: const SplashPage(),
+      //  builder: (context, child) {
+
+      // return SplashPage(child: child);
+      // },
     );
   }
 }

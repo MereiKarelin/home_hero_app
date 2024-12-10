@@ -19,7 +19,8 @@ class DCustomButton extends StatelessWidget {
     return InkWell(
       onTap: () => onTap(),
       splashColor: Colors.transparent,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
         height: 49,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
