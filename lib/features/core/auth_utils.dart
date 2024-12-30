@@ -4,3 +4,8 @@ enum AuthType {
 }
 
 enum RegionCode { kz, by, ru }
+
+enum UserType {
+  master,
+  user,
+}

@@ -14,5 +14,12 @@ class DColor {
   static const Color blueColor = Color.fromRGBO(0, 90, 198, 1);
   // static const Color greenPrymaryColor =
   static const Color greenUnselectedColor = Color.fromRGBO(215, 245, 220, 1);
+  static const Color greenSecondColor = Color.fromRGBO(211, 237, 179, 1);
   static const Color greyPrymaryColor = Color.fromRGBO(68, 65, 68, 1);
+  static const Color textFieldColor = Color.fromRGBO(243, 243, 243, 1);
+  static const Color redColor = Color.fromRGBO(240, 8, 29, 1);
+  static const Color redUnselectedColor = Color.fromRGBO(240, 235, 235, 1);
+  static const Color greenColor = Color.fromRGBO(9, 169, 39, 1);
+  static const Color boldGreenColor = Color.fromRGBO(26, 117, 41, 1);
+  static const Color orangeColor = Color.fromRGBO(255, 207, 125, 1);
 }

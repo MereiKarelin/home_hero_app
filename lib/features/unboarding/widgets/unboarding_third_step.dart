@@ -2,7 +2,6 @@ import 'package:datex/features/core/auth_utils.dart';
 import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/core/d_custom_button.dart';
 import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/features/unboarding/widgets/cookie_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

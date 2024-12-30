@@ -11,4 +11,9 @@ class DTextStyle {
     fontFamily: 'inter',
     decoration: TextDecoration.underline,
   );
+  static const blueText = TextStyle(
+    fontSize: 18,
+    color: DColor.blueColor,
+    fontFamily: 'inter',
+  );
 }

@@ -1,14 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:datex/features/core/auth_utils.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_custom_button.dart';
-import 'package:datex/features/unboarding/widgets/privacy_policy_widget.dart';
 import 'package:datex/features/unboarding/widgets/unboarding_first_step.dart';
 import 'package:datex/features/unboarding/widgets/unboarding_second_step.dart';
 import 'package:datex/features/unboarding/widgets/unboarding_third_step.dart';
 import 'package:datex/utils/app_router.gr.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 @RoutePage()
 class UnboardingChooseScreen extends StatefulWidget {
@@ -20,6 +16,8 @@ class UnboardingChooseScreen extends StatefulWidget {
 
 class _UnboardingChooseScreenState extends State<UnboardingChooseScreen> {
   int pageIndex = 0;
+  String selectedCountry = '';
+  AuthType? authType;
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +29,21 @@ class _UnboardingChooseScreenState extends State<UnboardingChooseScreen> {
           onTap: () => setState(() {
             pageIndex++;
           }),
+          onChangeAuthType: (AuthType authTypeVal) {
+            authType = authTypeVal;
+          },
         ),
         UnboardingSecondStep(
+          selectContry: (country) {
+            selectedCountry = country;
+          },
           onTap: () => setState(() {
             pageIndex++;
           }),
         ),
         UnboardingThirdStep(
           onTap: () => setState(() {
-            pageIndex++;
+            AutoRouter.of(context).push(AuthRoute(country: selectedCountry, userType: UserType.master, authType: authType ?? AuthType.registration));
           }),
         ),
       ],

@@ -1,6 +1,5 @@
 import 'package:datex/features/core/d_text_style.dart';
 import 'package:datex/features/core/d_webview_modal.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class CookieWidget extends StatelessWidget {

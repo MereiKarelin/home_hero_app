@@ -1,14 +1,17 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:datex/features/core/d_text_style.dart';
 import 'package:datex/utils/app_router.gr.dart';
+import 'package:datex/utils/injectable/configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 @RoutePage()
 class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+  final bool? isWelcomScreen;
+  const SplashPage({super.key, this.isWelcomScreen});
 
   @override
   State<StatefulWidget> createState() => _SplashPageState();
@@ -17,31 +20,41 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   VideoPlayerController? _controller;
   bool _visible = false;
+  bool isLogined = false;
 
   @override
   void initState() {
     super.initState();
-
+    isLogined = sharedDb.getString('token') != null;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    initVideo();
 
-    _controller = VideoPlayerController.asset("assets/video/splash.mp4");
-    _controller?.initialize().then((_) {
-      // _controller?.setLooping(true);
-      Timer(const Duration(milliseconds: 100), () {
-        setState(() {
-          _controller?.play();
-          _visible = true;
-        });
-      });
-    });
     if (mounted) {
       Future.delayed(const Duration(milliseconds: 3500), () {
-        AutoRouter.of(context).popAndPush(const UnboardingRoute());
+        if (isLogined) {
+          AutoRouter.of(context).popAndPush(const MainRoute());
+        } else {
+          AutoRouter.of(context).popAndPush(const UnboardingRoute());
+        }
+
         // AutoRouter.of(context).replaceNamed(UnboardingRoute.name);
       });
     }
+  }
+
+  Future<void> initVideo() async {
+    _controller = VideoPlayerController.asset("assets/video/splash.mp4");
+    await _controller?.initialize();
+
+    // _controller?.setLooping(true);
+    Timer(const Duration(milliseconds: 100), () {
+      setState(() {
+        _controller?.play();
+        _visible = true;
+      });
+    });
   }
 
   @override
@@ -66,8 +79,32 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       body: Center(
         child: Stack(
+          alignment: AlignmentDirectional.centerStart,
           children: <Widget>[
+            // SizedBox(height: MediaQuery.of(context).size.height,width: ,)
             _getVideoBackground(),
+            if (widget.isWelcomScreen ?? false)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Добро пожаловать в\nассистент для сервиса',
+                        style: DTextStyle.boldBlackText.copyWith(
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 300,
+                      ),
+                    ],
+                  ),
+                ],
+              )
           ],
         ),
       ),

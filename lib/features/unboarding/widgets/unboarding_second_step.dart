@@ -11,7 +11,9 @@ import 'package:flutter_svg/svg.dart';
 class UnboardingSecondStep extends StatefulWidget {
   AuthType? authType;
   final Function() onTap;
-  UnboardingSecondStep({super.key, required this.onTap, this.authType});
+  String? selectedValue;
+  final Function(String country) selectContry;
+  UnboardingSecondStep({super.key, required this.onTap, this.authType, required this.selectContry});
 
   @override
   State<UnboardingSecondStep> createState() => _UnboardingChooseScreenState();
@@ -23,11 +25,11 @@ class _UnboardingChooseScreenState extends State<UnboardingSecondStep> {
   int pageIndex = 0;
   AuthType? authType;
   final List<Map<String, String>> items = [
-    {
-      'value': 'kz',
-      'label': 'Казахстан',
-      'icon': 'assets/flags/kz.png',
-    },
+    // {
+    //   'value': 'kz',
+    //   'label': 'Казахстан',
+    //   'icon': 'assets/flags/kz.png',
+    // },
     {
       'value': 'ru',
       'label': 'Россия',
@@ -35,7 +37,6 @@ class _UnboardingChooseScreenState extends State<UnboardingSecondStep> {
     },
     {'value': 'by', 'label': 'Беларусь', 'icon': 'assets/flags/by.png'},
   ];
-  String? selectedValue;
 
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
@@ -70,8 +71,9 @@ class _UnboardingChooseScreenState extends State<UnboardingSecondStep> {
                     return InkWell(
                       onTap: () {
                         setState(() {
-                          selectedValue = item['value'];
+                          widget.selectedValue = item['value'];
                         });
+                        widget.selectContry(item['value'] ?? '');
                         toggleDropdown();
                       },
                       child: Padding(
@@ -147,17 +149,17 @@ class _UnboardingChooseScreenState extends State<UnboardingSecondStep> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if (selectedValue != null)
+                      if (widget.selectedValue != null)
                         Row(
                           children: [
                             Image.asset(
-                              items.firstWhere((item) => item['value'] == selectedValue)['icon']!,
+                              items.firstWhere((item) => item['value'] == widget.selectedValue)['icon']!,
                               width: 28,
                               height: 28,
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              items.firstWhere((item) => item['value'] == selectedValue)['label']!,
+                              items.firstWhere((item) => item['value'] == widget.selectedValue)['label']!,
                               style: DTextStyle.primaryText.copyWith(fontWeight: FontWeight.w600, fontSize: 14),
                             ),
                           ],
@@ -199,10 +201,10 @@ class _UnboardingChooseScreenState extends State<UnboardingSecondStep> {
               height: 10,
             ),
             DCustomButton(
-              gradient: cookie && selectedValue != null ? DColor.primaryGreenGradient : DColor.primaryGreenUnselectedGradient,
+              gradient: cookie && widget.selectedValue != null ? DColor.primaryGreenGradient : DColor.primaryGreenUnselectedGradient,
               text: 'Далее',
               onTap: () {
-                if (cookie && selectedValue != null) {
+                if (cookie && widget.selectedValue != null) {
                   authType = AuthType.registration;
                   widget.onTap();
                 }

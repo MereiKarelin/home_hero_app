@@ -10,7 +10,8 @@ import 'package:flutter_svg/svg.dart';
 class UnboardingFirstStep extends StatefulWidget {
   AuthType? authType;
   final Function() onTap;
-  UnboardingFirstStep({super.key, required this.onTap, this.authType});
+  final Function(AuthType authType) onChangeAuthType;
+  UnboardingFirstStep({super.key, required this.onTap, this.authType, required this.onChangeAuthType});
 
   @override
   State<UnboardingFirstStep> createState() => _UnboardingChooseScreenState();
@@ -20,7 +21,7 @@ class _UnboardingChooseScreenState extends State<UnboardingFirstStep> {
   bool first = false;
   bool second = false;
   int pageIndex = 0;
-  AuthType? authType;
+  // AuthType? authType;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,8 @@ class _UnboardingChooseScreenState extends State<UnboardingFirstStep> {
               text: 'Регистрация',
               onTap: () {
                 if (first && second) {
-                  authType = AuthType.registration;
+                  // authType = AuthType.registration;
+                  widget.onChangeAuthType(AuthType.registration);
                   widget.onTap();
                 }
               },
@@ -86,7 +88,8 @@ class _UnboardingChooseScreenState extends State<UnboardingFirstStep> {
               text: 'Авторизация',
               onTap: () {
                 if (first && second) {
-                  authType = AuthType.login;
+                  // authType = AuthType.login;
+                  widget.onChangeAuthType(AuthType.login);
                   widget.onTap();
                 }
               },
