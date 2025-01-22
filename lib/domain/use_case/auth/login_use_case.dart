@@ -1,5 +1,5 @@
 import 'package:datex/domain/repo/auth_repo.dart';
-import 'package:datex/domain/use_casee/base_use_case.dart';
+import 'package:datex/domain/use_case/base_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 class LoginUseCaseParams {

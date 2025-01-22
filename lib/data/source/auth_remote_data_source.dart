@@ -42,9 +42,11 @@ class AuthDataSourceImpl implements AuthDataSource {
 
   @override
   Future<void> confirmCode(String number, String code, AuthType authType) async {
+    final fcmToken = _sharedDb.getString('firebase');
+
     final response = authType == AuthType.login
-        ? await _dio.post('/auth/login/confirm', data: {'number': number, 'code': code})
-        : await _dio.post('/auth/confirm', data: {'number': number, 'code': code});
+        ? await _dio.post('/auth/login/confirm', data: {'number': number, 'code': code, 'fcmToken': fcmToken})
+        : await _dio.post('/auth/confirm', data: {'number': number, 'code': code, 'fcmToken': fcmToken});
 
     final user = User.fromJson(response.data['user']);
 

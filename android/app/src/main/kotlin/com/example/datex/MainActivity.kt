@@ -1,4 +1,4 @@
-package com.example.datex
+package com.datex.app
 
 import io.flutter.embedding.android.FlutterActivity
 

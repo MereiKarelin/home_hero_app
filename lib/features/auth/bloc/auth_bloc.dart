@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
-import 'package:datex/domain/use_casee/auth/check_number_use_case.dart';
-import 'package:datex/domain/use_casee/auth/confirm_code_use_case.dart';
-import 'package:datex/domain/use_casee/auth/login_use_case.dart';
-import 'package:datex/domain/use_casee/auth/register_use_case.dart';
+import 'package:datex/domain/use_case/auth/check_number_use_case.dart';
+import 'package:datex/domain/use_case/auth/confirm_code_use_case.dart';
+import 'package:datex/domain/use_case/auth/login_use_case.dart';
+import 'package:datex/domain/use_case/auth/register_use_case.dart';
 import 'package:datex/features/core/auth_utils.dart';
 import 'package:injectable/injectable.dart';
 // ignore: depend_on_referenced_packages

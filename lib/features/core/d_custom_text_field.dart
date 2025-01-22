@@ -79,7 +79,7 @@ class _DCustomTextFieldState extends State<DCustomTextField> {
           onChanged: widget.onChanged,
           validator: widget.validator,
           inputFormatters: maskFormatter != null ? [maskFormatter!] : null,
-          style: DTextStyle.primaryText,
+          style: DTextStyle.primaryText.copyWith(fontSize: 14),
           decoration: InputDecoration(
             fillColor: DColor.unselectedColor, // Серый цвет фона
             filled: true, // Включение заливки цветом

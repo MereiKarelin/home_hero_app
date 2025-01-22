@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:datex/data/models/event_model.dart';
 import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/core/d_text_style.dart';
+import 'package:datex/utils/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // для форматирования даты
 
@@ -28,7 +30,9 @@ class DInfoCard extends StatelessWidget {
     final String formattedDate = DateFormat('dd.MM.yyyy').format(eventModel.executionDate);
 
     return InkWell(
-      onTap: () => onTap(),
+      onTap: () {
+        AutoRouter.of(context).push(AddEventRoute(isCreate: false, eventModel: eventModel));
+      },
       splashColor: Colors.transparent,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),

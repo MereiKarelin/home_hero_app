@@ -52,7 +52,9 @@ class _CalendarSliderState extends State<CalendarSlider> {
       if (!result.containsKey(dayKey)) {
         result[dayKey] = <Color>[];
       }
-      result[dayKey]!.add(color);
+      if (result[dayKey]!.length < 3) {
+        result[dayKey]!.add(color);
+      }
     }
 
     return result;

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "779607642047",
+    "project_id": "datex-1341d",
+    "storage_bucket": "datex-1341d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779607642047:android:4128a01ab2de364c701b0a",
+        "android_client_info": {
+          "package_name": "com.datex.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn7Btr0NUJwnj6cavcAmgW7nX4xbh31SY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -51,33 +51,33 @@ class DioClient {
 
             try {
               // Попробуем обновить токен
-              final newToken = await _refreshToken();
-              if (newToken != null) {
-                // Сохраняем токен локально
-                await sharedDb.setString('token', newToken);
+              // final newToken = await _refreshToken();
+              // if (newToken != null) {
+              //   // Сохраняем токен локально
+              //   await sharedDb.setString('token', newToken);
 
-                // Клонируем старый запрос, чтобы повторить его
-                final opts = Options(
-                  method: error.requestOptions.method,
-                  headers: error.requestOptions.headers,
-                );
+              //   // Клонируем старый запрос, чтобы повторить его
+              //   final opts = Options(
+              //     method: error.requestOptions.method,
+              //     headers: error.requestOptions.headers,
+              //   );
 
-                // Обновляем заголовок Authorization
-                opts.headers?['Authorization'] = 'Bearer $newToken';
+              //   // Обновляем заголовок Authorization
+              //   opts.headers?['Authorization'] = 'Bearer $newToken';
 
-                // Делаем повторный запрос с новым токеном
-                final cloneReq = await _dio.request(
-                  error.requestOptions.path,
-                  options: opts,
-                  data: error.requestOptions.data,
-                  queryParameters: error.requestOptions.queryParameters,
-                );
-                return handler.resolve(cloneReq);
-              } else {
-                // Если newToken == null, значит обновить не удалось
-                // Можем выбросить ошибку или разлогинить пользователя
-                return handler.next(error);
-              }
+              //   // Делаем повторный запрос с новым токеном
+              //   final cloneReq = await _dio.request(
+              //     error.requestOptions.path,
+              //     options: opts,
+              //     data: error.requestOptions.data,
+              //     queryParameters: error.requestOptions.queryParameters,
+              //   );
+              //   return handler.resolve(cloneReq);
+              // } else {
+              //   // Если newToken == null, значит обновить не удалось
+              //   // Можем выбросить ошибку или разлогинить пользователя
+              //   return handler.next(error);
+              // }
             } catch (e) {
               print('Ошибка при попытке обновить токен: $e');
               // Можно сделать logout или другую обработку

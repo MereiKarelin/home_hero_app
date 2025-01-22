@@ -32,7 +32,7 @@ class UncomingEventsScreen extends StatefulWidget {
 class _UncomingEventsScreenState extends State<UncomingEventsScreen> {
   @override
   void initState() {
-    // BlocUtils.mainBloc.add(MainStartEvent());
+    BlocUtils.mainBloc.add(MainStartEvent());
     super.initState();
   }
 
@@ -43,32 +43,29 @@ class _UncomingEventsScreenState extends State<UncomingEventsScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SizedBox(
             height: MediaQuery.of(context).size.height / 5,
-            child: Container(
-              color: DColor.whiteColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  DCustomButton(
-                    text: 'Создать событие',
-                    onTap: () {
-                      AutoRouter.of(context).push(const AddEventRoute());
-                    },
-                    // color: DCol,
-                    gradient: DColor.primaryGreenGradient,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  DCustomButton(
-                    text: 'Назад',
-                    onTap: () {
-                      AutoRouter.of(context).maybePop();
-                    },
-                    color: DColor.greyColor,
-                    // gradient: DColor.,
-                  ),
-                ],
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                DCustomButton(
+                  text: 'Создать событие',
+                  onTap: () {
+                    AutoRouter.of(context).push(AddEventRoute(isCreate: true));
+                  },
+                  // color: DCol,
+                  gradient: DColor.primaryGreenGradient,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                DCustomButton(
+                  text: 'Назад',
+                  onTap: () {
+                    AutoRouter.of(context).maybePop();
+                  },
+                  color: DColor.greyColor,
+                  // gradient: DColor.,
+                ),
+              ],
             ),
           ),
         ),
@@ -129,41 +126,42 @@ class _UncomingEventsScreenState extends State<UncomingEventsScreen> {
             ),
           ],
         ),
-        body: BlocProvider(
-            create: (context) => BlocUtils.mainBloc,
-            child: BlocConsumer<MainBloc, MainState>(
-              builder: (context, state) => SingleChildScrollView(
-                  child: state is MainLoadedState
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListView.builder(
-                              padding: const EdgeInsets.all(12),
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: state.todayEvents.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                // Фильтруем события для выбранной даты
-                                final filteredEvents = state.todayEvents;
+        body: BlocConsumer<MainBloc, MainState>(
+          builder: (context, state) => SingleChildScrollView(
+              child: state is MainLoadedState
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListView.builder(
+                          padding: const EdgeInsets.all(12),
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.todayEvents.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            // Фильтруем события для выбранной даты
+                            final filteredEvents = state.todayEvents;
 
-                                final event = filteredEvents[index];
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 5),
-                                  child: DInfoCard(
-                                    eventModel: event,
-                                    onTap: () {},
-                                    color: event.eventType == "REGULAR" ? DColor.greenSecondColor : DColor.redUnselectedColor,
-                                    borderColor: event.eventType == "REGULAR" ? DColor.greenColor : DColor.redColor,
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
+                            final event = filteredEvents[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: DInfoCard(
+                                eventModel: event,
+                                onTap: () {},
+                                color: event.eventType == "REGULAR" ? DColor.greenSecondColor : DColor.redUnselectedColor,
+                                borderColor: event.eventType == "REGULAR" ? DColor.greenColor : DColor.redColor,
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 4,
                         )
-                      : const Center(
-                          child: CircularProgressIndicator(),
-                        )),
-              listener: (BuildContext context, state) {},
-            )));
+                      ],
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    )),
+          listener: (BuildContext context, state) {},
+        ));
   }
 }

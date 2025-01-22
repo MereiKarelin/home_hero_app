@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:datex/features/core/d_text_style.dart';
+import 'package:datex/features/main/bloc/main_bloc.dart';
 import 'package:datex/utils/app_router.gr.dart';
+import 'package:datex/utils/bloc_utils.dart';
 import 'package:datex/utils/injectable/configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +36,7 @@ class _SplashPageState extends State<SplashPage> {
     if (mounted) {
       Future.delayed(const Duration(milliseconds: 3500), () {
         if (isLogined) {
+          BlocUtils.mainBloc.add(MainStartEvent());
           AutoRouter.of(context).popAndPush(const MainRoute());
         } else {
           AutoRouter.of(context).popAndPush(const UnboardingRoute());

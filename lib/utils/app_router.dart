@@ -13,5 +13,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SecondMainRoute.page, path: '/main/second'),
         AutoRoute(page: UncomingEventsRoute.page, path: '/main/uncomingEvents'),
         AutoRoute(page: AddEventRoute.page, path: '/main/addEvent'),
+        AutoRoute(page: FollowingRoute.page, path: '/main/following'),
       ];
 }

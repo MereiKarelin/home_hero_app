@@ -26,8 +26,13 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
-    BlocUtils.mainBloc.add(MainStartEvent());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -96,90 +101,108 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       drawer: const CustomDrawer(), // Добавляем сам Drawer здесь
-      body: BlocProvider(
-        create: (context) => BlocUtils.mainBloc,
-        child: BlocConsumer<MainBloc, MainState>(
-          builder: (context, state) => SingleChildScrollView(
-            child: state is MainLoadedState
-                ? Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Календарь',
-                          style: DTextStyle.boldBlackText.copyWith(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomCalendarWidget(
-                          events: state.events,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            state.userType == 'LEADING'
-                                ? DActionButton(
-                                    text: 'Создать событие',
-                                    onTap: () {
-                                      AutoRouter.of(context).push(const AddEventRoute());
-                                    },
-                                    icon: const Icon(Icons.add),
-                                    color: DColor.greenColor,
-                                    width: MediaQuery.of(context).size.width / 2.3,
-                                  )
-                                : Expanded(
-                                    child: DActionButton(
-                                      text: 'Создать экстренное событие',
-                                      onTap: () {},
-                                      icon: const Icon(Icons.add),
-                                      color: DColor.greenColor,
-                                    ),
-                                  ),
-                            state.userType == 'LEADING'
-                                ? DActionButton(
-                                    text: 'Создать ведомого',
+      body: BlocConsumer<MainBloc, MainState>(
+        builder: (context, state) => SingleChildScrollView(
+          child: state is MainLoadedState
+              ? Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Календарь',
+                            style: DTextStyle.boldBlackText.copyWith(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CustomCalendarWidget(
+                        events: state.events,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          state.userType == 'LEADING'
+                              ? DActionButton(
+                                  text: 'Создать событие',
+                                  onTap: () {
+                                    AutoRouter.of(context).push(AddEventRoute(isCreate: true));
+                                  },
+                                  icon: const Icon(Icons.add),
+                                  color: DColor.greenColor,
+                                  width: MediaQuery.of(context).size.width / 2.3,
+                                )
+                              : Expanded(
+                                  child: DActionButton(
+                                    text: 'Создать экстренное событие',
                                     onTap: () {},
                                     icon: const Icon(Icons.add),
                                     color: DColor.greenColor,
-                                    width: MediaQuery.of(context).size.width / 2.3)
-                                : const SizedBox()
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        ListView.builder(
-                          reverse: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: state.todayEvents.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final event = state.todayEvents[index];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: DInfoCard(
-                                eventModel: event,
-                                onTap: () {},
-                                color: event.eventType == "REGULAR" ? DColor.greenSecondColor : DColor.redUnselectedColor,
-                                borderColor: event.eventType == "REGULAR" ? DColor.greenColor : DColor.redColor,
-                              ),
-                            );
-                          },
+                                  ),
+                                ),
+                          state.userType == 'LEADING'
+                              ? DActionButton(
+                                  text: 'Создать ведомого',
+                                  onTap: () {
+                                    AutoRouter.of(context).push(FollowingRoute());
+                                  },
+                                  icon: const Icon(Icons.add),
+                                  color: DColor.greenColor,
+                                  width: MediaQuery.of(context).size.width / 2.3)
+                              : const SizedBox()
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      ListView.builder(
+                        reverse: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.todayEvents.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final event = state.todayEvents[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: DInfoCard(
+                              eventModel: event,
+                              onTap: () {},
+                              color: event.eventType == "REGULAR" ? DColor.greenSecondColor : DColor.redUnselectedColor,
+                              borderColor: event.eventType == "REGULAR" ? DColor.greenColor : DColor.redColor,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: CircularProgressIndicator(
+                            color: DColor.greenColor,
+                          ),
                         ),
                       ],
                     ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-          ),
-          listener: (BuildContext context, state) {},
+                  ],
+                ),
         ),
+        listener: (BuildContext context, state) {},
       ),
     );
   }
