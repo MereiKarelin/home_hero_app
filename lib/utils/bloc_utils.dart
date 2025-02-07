@@ -10,3 +10,5 @@ class BlocUtils {
   static final eventBloc = getIt.get<EventBloc>();
   static final follofingBloc = getIt.get<FollowingBloc>();
 }
+
+enum Status { success, loading, error }

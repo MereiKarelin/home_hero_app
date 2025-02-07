@@ -10,6 +10,7 @@ class DDropdownButtonWidget extends StatefulWidget {
   final Function(String country) onSelectCountry;
   final LayerLink layerLink;
   final String text;
+  final bool readOnly;
 
   const DDropdownButtonWidget({
     super.key,
@@ -18,6 +19,7 @@ class DDropdownButtonWidget extends StatefulWidget {
     required this.onSelectCountry,
     required this.layerLink,
     required this.text,
+    required this.readOnly,
   });
 
   @override
@@ -56,28 +58,32 @@ class _DropdownButtonWidgetState extends State<DDropdownButtonWidget> {
                       border: Border.all(color: DColor.greyUnselectedColor, width: 0.5), // Border color
                       color: Colors.white, // White color for the dropdown
                     ),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          widget.onSelectCountry(item['value'] ?? '');
-                        });
-                        toggleDropdown();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-                        child: SizedBox(
-                          height: 15,
-                          child: Row(
-                            children: [
-                              // const SizedBox(width: 8),
-                              Text(
-                                item['label']!,
-                                style: DTextStyle.primaryText.copyWith(fontSize: 14),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              widget.onSelectCountry(item['value'] ?? '');
+                            });
+                            toggleDropdown();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+                            child: SizedBox(
+                              height: 15,
+                              child: Row(
+                                children: [
+                                  // const SizedBox(width: 8),
+                                  Text(
+                                    item['label']!,
+                                    style: DTextStyle.primaryText.copyWith(fontSize: 14),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   );
                 }).toList(),
@@ -94,9 +100,9 @@ class _DropdownButtonWidgetState extends State<DDropdownButtonWidget> {
     return CompositedTransformTarget(
       link: widget.layerLink,
       child: GestureDetector(
-        onTap: toggleDropdown,
+        onTap: widget.readOnly ? () {} : toggleDropdown,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 4),
           decoration: BoxDecoration(
             color: DColor.unselectedColor, // Цвет фона, аналогичный DCustomTextField
             borderRadius: BorderRadius.circular(8),
@@ -104,25 +110,44 @@ class _DropdownButtonWidgetState extends State<DDropdownButtonWidget> {
               color: DColor.unselectedColor, // Цвет границы
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (widget.selectedValue != null)
-                Row(
-                  children: [
-                    // const SizedBox(width: 8),
-                    Text(
-                      widget.items.firstWhere((item) => item['value'] == widget.selectedValue)['label']!,
-                      style: DTextStyle.primaryText.copyWith(fontSize: 14),
+              widget.selectedValue != null
+                  ? Text(
+                      widget.text,
+                      style: DTextStyle.primaryText.copyWith(color: DColor.greyUnselectedColor, fontWeight: FontWeight.w700, fontSize: 11),
+                    )
+                  : const SizedBox(
+                      height: 6,
                     ),
-                  ],
-                )
-              else
-                Text(
-                  widget.text,
-                  style: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
-                ),
-              const Icon(Icons.keyboard_arrow_down),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (widget.selectedValue != null)
+                    Row(
+                      children: [
+                        // const SizedBox(width: 8),
+                        Text(
+                          widget.items.firstWhere((item) => item['value'] == widget.selectedValue)['label']!,
+                          style: DTextStyle.primaryText.copyWith(fontSize: 14),
+                        ),
+                      ],
+                    )
+                  else
+                    Text(
+                      widget.text,
+                      style: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
+                    ),
+                  widget.readOnly ? const SizedBox() : const Icon(Icons.keyboard_arrow_down),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
             ],
           ),
         ),

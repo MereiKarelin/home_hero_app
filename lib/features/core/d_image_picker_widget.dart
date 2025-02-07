@@ -11,7 +11,9 @@ import 'dart:io';
 
 class DPhotoPickerWidget extends StatefulWidget {
   final Function(File file) onImagePicked;
-  const DPhotoPickerWidget({super.key, required this.onImagePicked});
+  final double? height;
+  final double? width;
+  const DPhotoPickerWidget({super.key, required this.onImagePicked, this.height, this.width});
 
   @override
   _DPhotoPickerWidgetState createState() => _DPhotoPickerWidgetState();
@@ -69,8 +71,8 @@ class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
         InkWell(
           onTap: _showImageSourceActionSheet,
           child: Container(
-            width: 100,
-            height: 100,
+            width: widget.width ?? 100,
+            height: widget.height ?? 100,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(8),

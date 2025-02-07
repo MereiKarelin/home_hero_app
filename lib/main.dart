@@ -100,19 +100,19 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider<AuthBloc>(
             create: (_) => BlocUtils.authBloc, // Ваш метод получения Bloc
-            lazy: false, // Инициализировать сразу, а не при первом использовании
+            // lazy: false, // Инициализировать сразу, а не при первом использовании
           ),
           BlocProvider<MainBloc>(
             create: (_) => BlocUtils.mainBloc,
-            lazy: false,
+            // lazy: false,
           ),
           BlocProvider<EventBloc>(
             create: (_) => BlocUtils.eventBloc,
-            lazy: false,
+            // lazy: false,
           ),
           BlocProvider<FollowingBloc>(
             create: (_) => BlocUtils.follofingBloc,
-            lazy: false,
+            // lazy: false,
           )
         ],
         child: MaterialApp.router(

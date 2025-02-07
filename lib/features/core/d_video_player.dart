@@ -1,4 +1,4 @@
-import 'package:chewie/chewie.dart';
+import 'package:datex/features/core/d_color.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -14,7 +14,6 @@ class DVideoPlayer extends StatefulWidget {
 
 class _DVideoPlayerState extends State<DVideoPlayer> {
   VideoPlayerController? _videoController;
-  ChewieController? _chewteController;
 
   @override
   void initState() {
@@ -31,46 +30,58 @@ class _DVideoPlayerState extends State<DVideoPlayer> {
   }
 
   void _initializePlayer(String filePath) {
-    _disposeControllers(); // Освобождаем старые ресурсы
+    _disposeController();
     _videoController = VideoPlayerController.asset(filePath)
       ..initialize().then((_) {
-        setState(() {}); // Перерисовываем виджет после инициализации
+        setState(() {});
+        if (widget.autoPlay) {
+          _videoController?.play();
+        }
       });
-
-    _chewteController = ChewieController(
-      videoPlayerController: _videoController!,
-      autoInitialize: true,
-      aspectRatio: 2,
-      // showControls: false,
-      autoPlay: widget.autoPlay,
-
-      placeholder: Container(
-        color: Colors.white,
-      ),
-    );
-    if (widget.autoPlay) {
-      _chewteController?.play();
-    }
   }
 
-  void _disposeControllers() {
-    _chewteController?.dispose();
+  void _disposeController() {
     _videoController?.dispose();
+  }
+
+  void _togglePlayPause() {
+    if (_videoController == null) return;
+
+    setState(() {
+      if (_videoController!.value.isPlaying) {
+        _videoController!.pause();
+      } else {
+        _videoController!.play();
+      }
+    });
   }
 
   @override
   void dispose() {
-    _disposeControllers();
+    _disposeController();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 175,
-      child: _chewteController != null && _videoController!.value.isInitialized
-          ? Container(color: Colors.transparent, child: Chewie(controller: _chewteController!))
-          : const Center(child: CircularProgressIndicator()),
+    return GestureDetector(
+      onTap: _togglePlayPause, // Нажатие на видео
+      child: SizedBox(
+        height: 175,
+        child: _videoController != null && _videoController!.value.isInitialized
+            ? Stack(
+                alignment: Alignment.center,
+                children: [
+                  VideoPlayer(_videoController!),
+                  if (!_videoController!.value.isPlaying)
+                    CircleAvatar(
+                        radius: 20,
+                        backgroundColor: DColor.greenColor,
+                        child: Center(child: const Icon(Icons.play_arrow_rounded, size: 30, color: Colors.white))),
+                ],
+              )
+            : const Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }

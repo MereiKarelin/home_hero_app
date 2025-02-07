@@ -114,7 +114,7 @@ class _SecondMainScreenState extends State<SecondMainScreen> {
         ),
         body: BlocConsumer<MainBloc, MainState>(
           builder: (context, state) => SingleChildScrollView(
-              child: state is MainLoadedState
+              child: state.status == Status.success
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

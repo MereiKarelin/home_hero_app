@@ -3,6 +3,7 @@ import 'package:datex/data/models/event_model.dart';
 import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/core/d_custom_button.dart';
 import 'package:datex/features/core/d_custom_text_field.dart';
+import 'package:datex/features/core/d_custom_text_lable_field.dart';
 import 'package:datex/features/core/d_drop_down_button.dart';
 import 'package:datex/features/core/d_text_style.dart';
 import 'package:datex/features/event/bloc/event_bloc.dart';
@@ -37,13 +38,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
     dataController.text = DateFormat('dd.MM.yyyy').format(DateTime.now());
     if (!widget.isCreate) {
       setState(() {
-        selectedValue = '6m';
-        selectedValue2 = 'proccess';
+        selectedValue = widget.eventModel?.repeatPeriod ?? 'SEMIANNUALLY';
+        selectedValue2 = 'PENDING';
         selectedValue3 = (widget.eventModel?.followingUserId ?? 0).toString();
         dataController.text = DateFormat('dd.MM.yyyy').format(widget.eventModel?.executionDate ?? DateTime.now());
         descriptionController.text = widget.eventModel?.title ?? '';
         commentController.text = widget.eventModel?.description ?? '';
       });
+    } else {
+      selectedValue2 = 'PENDING';
     }
     super.initState();
   }
@@ -55,15 +58,17 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   // Your existing lists for dropdown items
   final List<Map<String, String>> items = [
-    {'value': '6m', 'label': '6 месяцев'},
-    {'value': '12m', 'label': '12 месяцев'},
-    {'value': '4m', 'label': '4 месяцев'},
-    {'value': 'no', 'label': 'Прекратить сервис'},
+    {'value': 'SEMIANNUALLY', 'label': '6 месяцев'},
+    {'value': 'ANNUALLY', 'label': '12 месяцев'},
+    {'value': 'QUARTERLY', 'label': '3 месяцев'},
+    {'value': 'MONTHLY', 'label': '1 месяц'},
+    {'value': 'ONCE', 'label': 'Прекратить сервис'},
   ];
 
   final List<Map<String, String>> status = [
-    {'value': 'proccess', 'label': 'Запланировано'},
-    {'value': 'done', 'label': 'Выполнено'},
+    {'value': 'PENDING', 'label': 'Запланировано'},
+    {'value': 'PROGRESS', 'label': 'Выполнено'},
+    {'value': 'DONE', 'label': 'Выполнено'},
   ];
 
   @override
@@ -92,8 +97,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 assignedDate: DateTime.now(),
                                 executionDate: DateFormat('dd.MM.yyyy').parse(dataController.text),
                                 endDate: DateTime.now(),
-                                address: 'Адресс тут',
-                                eventType: '')));
+                                address: '',
+                                eventType: 'REGULAR',
+                                repeatPeriod: selectedValue ?? 'ONCE',
+                                confirmed: false,
+                                imageIds: [])));
                       } else {
                         BlocUtils.eventBloc.add(UpdateEvEvent(
                             eventModel: EventModel(
@@ -106,7 +114,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 executionDate: DateFormat('dd.MM.yyyy').parse(dataController.text),
                                 endDate: widget.eventModel?.endDate ?? DateTime.now(),
                                 address: widget.eventModel?.address ?? '',
-                                eventType: widget.eventModel?.eventType ?? '')));
+                                eventType: widget.eventModel?.eventType ?? '',
+                                repeatPeriod: selectedValue ?? 'ONCE',
+                                confirmed: widget.eventModel?.confirmed,
+                                imageIds: [])));
                       }
 
                       await Future.delayed(Duration(seconds: 2));
@@ -182,15 +193,17 @@ class _AddEventScreenState extends State<AddEventScreen> {
           ],
         ),
         body: BlocConsumer<MainBloc, MainState>(
-          builder: (context, state) => state is MainLoadedState
+          builder: (context, state) => state.status == Status.success
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
                       DDropdownButtonWidget(
+                        readOnly: selectedValue3 != null,
                         text: 'Выберите Обьект*',
                         items: state.followers
-                            .map((follower) => {'value': follower.id.toString(), 'label': '${follower.name} ${follower.address ?? ''}'})
+                            .map((follower) =>
+                                {'value': follower.id.toString(), 'label': '${follower.name}\n${follower.address ?? ''}\n${follower.location ?? ''}'})
                             .toList(),
 
                         selectedValue: selectedValue3,
@@ -201,20 +214,26 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         },
                         layerLink: _layerLink3, // Pass the first LayerLink here
                       ),
-                      DCustomTextField(
+                      const SizedBox(height: 30),
+                      DCustomTextLableField(
+                        readOnly: false,
+                        initialText: dataController.text,
+                        textStyle: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
                         controller: dataController,
-                        label: '',
-                        hint: 'Дата',
-                        hintStyle: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
+                        label: 'Дата',
+                        // hint: 'Дата',
                       ),
-                      DCustomTextField(
+                      const SizedBox(height: 30),
+                      DCustomTextLableField(
+                        readOnly: false,
+                        initialText: descriptionController.text,
+                        textStyle: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
                         controller: descriptionController,
-                        label: '',
-                        hint: 'Добавьте описание события*',
-                        hintStyle: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
+                        label: 'Добавьте описание события*',
                       ),
                       const SizedBox(height: 30),
                       DDropdownButtonWidget(
+                        readOnly: false,
                         text: 'Выберете сервисный интервал*',
                         items: items,
                         selectedValue: selectedValue,
@@ -227,6 +246,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ),
                       const SizedBox(height: 30),
                       DDropdownButtonWidget(
+                        readOnly: false,
                         text: 'Статус',
                         items: status,
                         selectedValue: selectedValue2,
@@ -237,11 +257,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         },
                         layerLink: _layerLink2, // Pass the second LayerLink here
                       ),
-                      DCustomTextField(
+                      const SizedBox(height: 30),
+                      DCustomTextLableField(
+                        readOnly: false,
+                        initialText: commentController.text,
+                        textStyle: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
                         controller: commentController,
-                        label: '',
-                        hint: 'Комментарий',
-                        hintStyle: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
+                        label: 'Комментарий',
                       ),
                     ],
                   ),

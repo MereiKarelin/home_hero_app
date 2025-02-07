@@ -4,8 +4,16 @@ import 'package:datex/utils/shared_db.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class EventDataSource {
-  Future<List<EventModel>> getEvents();
+  /// Получить события, которые попадают в указанный месяц.
+  Future<List<EventModel>> getEventsByMonth(int year, int month);
+
+  /// Получить события, которые попадают в указанный день.
+  Future<List<EventModel>> getEventsByDay(int year, int month, int day);
+
+  /// Создать новое событие
   Future<void> addEvent(EventModel event);
+
+  /// Обновить существующее событие по его ID
   Future<void> updateEvent(String id, EventModel event);
 }
 
@@ -16,67 +24,119 @@ class EventDataSourceImpl implements EventDataSource {
 
   EventDataSourceImpl(this._dio, this._sharedDb);
 
+  /// ======================= GET EVENTS BY MONTH =======================
   @override
-  Future<List<EventModel>> getEvents() async {
+  Future<List<EventModel>> getEventsByMonth(int year, int month) async {
     final id = _sharedDb.getInt('id');
     final userType = _sharedDb.getString('userType');
 
-    final path = (userType == 'LEADING') ? '/events/leader/$id' : '/events/following/$id';
+    // Выбираем нужный эндпоинт
+    // Лидер:   /events/leader/{leaderId}/month?year=...&month=...
+    // Исполнитель: /events/following/{followingId}/month?year=...&month=...
+    final path = (userType == 'LEADING') ? '/events/leader/$id/month' : '/events/following/$id/month';
 
-    // Указываем <List> после get, так как сервер возвращает массив событий:
-    final response = await _dio.get<List>(path);
+    // Делаем GET-запрос с queryParameters
+    final response = await _dio.get<List>(
+      path,
+      queryParameters: {
+        'year': year,
+        'month': month,
+      },
+    );
 
-    // response.data может быть null, поэтому подстраховываемся:
     final data = response.data ?? [];
-
-    // Превращаем List<dynamic> в List<Map<String, dynamic>> c помощью cast(),
-    // а затем мапим в EventModel.fromJson.
     return data.cast<Map<String, dynamic>>().map((item) => EventModel.fromJson(item)).toList();
   }
 
+  /// ======================= GET EVENTS BY DAY =======================
+  @override
+  Future<List<EventModel>> getEventsByDay(int year, int month, int day) async {
+    final id = _sharedDb.getInt('id');
+    final userType = _sharedDb.getString('userType');
+
+    // Аналогично, но для /day
+    // Лидер:   /events/leader/{leaderId}/day?year=...&month=...&day=...
+    // Исполнитель: /events/following/{followingId}/day?year=...&month=...&day=...
+    final path = (userType == 'LEADING') ? '/events/leader/$id/day' : '/events/following/$id/day';
+
+    final response = await _dio.get<List>(
+      path,
+      queryParameters: {
+        'year': year,
+        'month': month,
+        'day': day,
+      },
+    );
+
+    final data = response.data ?? [];
+    return data.cast<Map<String, dynamic>>().map((item) => EventModel.fromJson(item)).toList();
+  }
+
+  /// ========================= CREATE EVENT =========================
   @override
   Future<void> addEvent(EventModel event) async {
     final id = _sharedDb.getInt('id');
     final userType = _sharedDb.getString('userType');
 
+    // В текущем коде создаём событие на бэке
+    // POST /events/create
+    // Обратите внимание: если в бэке теперь важно передавать repeatPeriod (ONCE/MONTHLY и т.д.),
+    // leadingStatus, followingStatus, и т.д. — добавьте их сюда в data:
     final path = '/events/create';
 
-    // Указываем <Map<String, dynamic>>, чтобы ожидать от сервера объект, а не список:
     final response = await _dio.post<Map<String, dynamic>>(
       path,
       data: {
-        "leaderUserId": id,
-        "followingUserId": event.followingUserId,
+        "leaderUserId": userType == 'LEADING' ? id : event.leaderUserId,
+        "followingUserId": userType == 'LEADING' ? event.followingUserId : id,
         "title": event.title,
         "description": event.description,
-        "assignedDate": DateTime.now().toIso8601String(),
-        "executionDate": event.assignedDate.toIso8601String(),
-        "endDate": DateTime.now().toIso8601String(),
+
+        // assignedDate можно взять из event.assignedDate (или DateTime.now(), если бизнес-логика требует)
+        "assignedDate": event.assignedDate.toIso8601String(),
+
+        // executionDate
+        "executionDate": event.executionDate.toIso8601String(),
+
+        // endDate (если есть)
+        "endDate": event.endDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
+
         "address": event.address,
-        "eventType": userType == 'LEADING' ? "REGULAR" : "EMERGENCY"
+
+        // eventType — зависит от userType? Или берем из event.eventType?
+        "eventType": event.eventType,
+
+        // Добавляем повторение (если нужно)
+        "repeatPeriod": event.repeatPeriod, // "ONCE"/"MONTHLY"/...
+
+        // Остальные поля, если нужны (leadingStatus, followingStatus, ...).
+        "leadingStatus": event.leadingStatus,
+        "followingStatus": event.followingStatus,
+        "progressInfo": event.progressInfo,
+        "comment": event.comment,
+        "confirmed": event.confirmed,
+        // imageIds, если у вас есть
+        "imageIds": event.imageIds,
       },
     );
 
     final data = response.data;
     if (data != null) {
       print('Созданное событие: $data');
-
-      // Если нужно распарсить в модель:
+      // Можно распарсить, если нужно
       // final createdEvent = EventModel.fromJson(data);
-      // ... Дальше можно работать с `createdEvent`
     } else {
       print('No data received');
     }
   }
 
+  /// ======================== UPDATE EVENT ========================
   @override
   Future<void> updateEvent(String id, EventModel event) async {
-    final userId = _sharedDb.getInt('id');
-    final userType = _sharedDb.getString('userType');
+    // PUT /events/{eventId}
 
     final path = '/events/$id';
 
-    // Указываем <Map<String, dynamic>>, так как сервер возвращает одиночный объект события:
     final response = await _dio.put<Map<String, dynamic>>(
       path,
       data: {
@@ -86,19 +146,23 @@ class EventDataSourceImpl implements EventDataSource {
         "description": event.description,
         "assignedDate": event.assignedDate.toIso8601String(),
         "executionDate": event.executionDate.toIso8601String(),
-        "endDate": event.endDate.toIso8601String(),
+        "endDate": event.endDate?.toIso8601String(),
         "address": event.address,
-        "eventType": userType == 'LEADING' ? "REGULAR" : "EMERGENCY"
+        "eventType": event.eventType, // "REGULAR"/"EMERGENCY"
+        "repeatPeriod": event.repeatPeriod, // ONCE/MONTHLY/etc
+        "leadingStatus": event.leadingStatus,
+        "followingStatus": event.followingStatus,
+        "progressInfo": event.progressInfo,
+        "comment": event.comment,
+        "confirmed": event.confirmed,
+        "imageIds": event.imageIds,
       },
     );
 
     final data = response.data;
     if (data != null) {
       print('Обновлённое событие: $data');
-
-      // Преобразуем Map<String, dynamic> в модель EventModel:
-      final updatedEvent = EventModel.fromJson(data);
-      // Теперь можно работать с `updatedEvent`, если это необходимо
+      // final updatedEvent = EventModel.fromJson(data);
     } else {
       print('No data received');
     }

@@ -14,3 +14,10 @@ class UpdateUserInfoEvent extends MainEvent {
 
   const UpdateUserInfoEvent({required this.userInfoModel});
 }
+
+class SearchByDateEvent extends MainEvent {
+  final int year;
+  final int mouth;
+
+  const SearchByDateEvent({required this.year, required this.mouth});
+}

@@ -13,12 +13,10 @@ class UpdateEventUseCaseParams {
 class UpdateEventUseCase implements UseCase<void, UpdateEventUseCaseParams> {
   final EventRepo repository;
 
-  const UpdateEventUseCase({
-    required this.repository,
-  });
+  const UpdateEventUseCase({required this.repository});
 
   @override
-  Future<void> call(UpdateEventUseCaseParams params) async {
-    return await repository.updateEvent(params.id, params.eventModel);
+  Future<void> call(UpdateEventUseCaseParams params) {
+    return repository.updateEvent(params.id, params.eventModel);
   }
 }

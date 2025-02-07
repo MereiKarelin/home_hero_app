@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:datex/data/models/event_model.dart';
+import 'package:datex/data/models/user_info_model.dart';
 import 'package:datex/features/core/d_action_button.dart';
 import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/core/d_info_card.dart';
@@ -103,7 +104,7 @@ class _MainScreenState extends State<MainScreen> {
       drawer: const CustomDrawer(), // Добавляем сам Drawer здесь
       body: BlocConsumer<MainBloc, MainState>(
         builder: (context, state) => SingleChildScrollView(
-          child: state is MainLoadedState
+          child: state.status == Status.success
               ? Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
@@ -143,7 +144,12 @@ class _MainScreenState extends State<MainScreen> {
                               : Expanded(
                                   child: DActionButton(
                                     text: 'Создать экстренное событие',
-                                    onTap: () {},
+                                    onTap: () {
+                                      AutoRouter.of(context).push(ExtraEventRoute(
+                                        isCreate: true,
+                                        userInfoModel: state.userInfo ?? UserInfoModel(name: '', number: '', location: '', address: '', imageId: '', id: 0),
+                                      ));
+                                    },
                                     icon: const Icon(Icons.add),
                                     color: DColor.greenColor,
                                   ),
@@ -184,22 +190,25 @@ class _MainScreenState extends State<MainScreen> {
                     ],
                   ),
                 )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Center(
-                          child: CircularProgressIndicator(
-                            color: DColor.greenColor,
+              : SizedBox(
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: CircularProgressIndicator(
+                              color: DColor.greenColor,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
         ),
         listener: (BuildContext context, state) {},

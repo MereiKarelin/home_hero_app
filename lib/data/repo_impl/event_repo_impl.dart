@@ -12,11 +12,22 @@ class EventRepoImpl implements EventRepo {
   });
 
   @override
-  Future<List<EventModel>> getEvents() async => await eventDataSource.getEvents();
+  Future<List<EventModel>> getEventsByMonth(int year, int month) {
+    return eventDataSource.getEventsByMonth(year, month);
+  }
 
   @override
-  Future<void> addEvent(EventModel event) async => await eventDataSource.addEvent(event);
+  Future<List<EventModel>> getEventsByDay(int year, int month, int day) {
+    return eventDataSource.getEventsByDay(year, month, day);
+  }
 
   @override
-  Future<void> updateEvent(String id, EventModel event) async => await eventDataSource.updateEvent(id, event);
+  Future<void> addEvent(EventModel event) {
+    return eventDataSource.addEvent(event);
+  }
+
+  @override
+  Future<void> updateEvent(String id, EventModel event) {
+    return eventDataSource.updateEvent(id, event);
+  }
 }

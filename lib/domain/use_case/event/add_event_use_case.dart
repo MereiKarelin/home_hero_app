@@ -4,7 +4,6 @@ import 'package:datex/domain/use_case/base_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 class AddEventUseCaseParams {
-  // final String id;
   final EventModel eventModel;
   AddEventUseCaseParams({required this.eventModel});
 }
@@ -18,7 +17,7 @@ class AddEventUseCase implements UseCase<void, AddEventUseCaseParams> {
   });
 
   @override
-  Future<void> call(AddEventUseCaseParams params) async {
-    return await repository.addEvent(params.eventModel);
+  Future<void> call(AddEventUseCaseParams params) {
+    return repository.addEvent(params.eventModel);
   }
 }

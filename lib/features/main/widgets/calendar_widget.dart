@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:datex/utils/app_router.gr.dart';
+import 'package:datex/utils/bloc_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -17,13 +18,13 @@ class CalendarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
-        if (state is MainLoadingState) {
+        if (state.calendarStatus == Status.loading) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (state is MainErrorState) {
+        if (state.status == Status.error) {
           // return Center(child: Text('Ошибка: ${state.message}'));
         }
-        if (state is MainLoadedState) {
+        if (state.calendarStatus == Status.success) {
           // Предположим, что в MainLoadedState у нас есть список событий:
           final events = state.events; // List<EventModel>
           return CustomCalendarWidget(events: events);
@@ -352,6 +353,7 @@ class _StyledCalendarState extends State<CustomCalendarWidget> {
     setState(() {
       _currentMonth = DateTime(_currentMonth.year, _currentMonth.month - 1);
     });
+    BlocUtils.mainBloc.add(SearchByDateEvent(year: _currentMonth.year, mouth: _currentMonth.month));
   }
 
   /// Переключение на следующий месяц
@@ -359,6 +361,7 @@ class _StyledCalendarState extends State<CustomCalendarWidget> {
     setState(() {
       _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + 1);
     });
+    BlocUtils.mainBloc.add(SearchByDateEvent(year: _currentMonth.year, mouth: _currentMonth.month));
   }
 
   /// Переключение на предыдущий год
@@ -366,6 +369,7 @@ class _StyledCalendarState extends State<CustomCalendarWidget> {
     setState(() {
       _currentMonth = DateTime(_currentMonth.year - 1, _currentMonth.month);
     });
+    BlocUtils.mainBloc.add(SearchByDateEvent(year: _currentMonth.year, mouth: _currentMonth.month));
   }
 
   /// Переключение на следующий год
@@ -373,6 +377,7 @@ class _StyledCalendarState extends State<CustomCalendarWidget> {
     setState(() {
       _currentMonth = DateTime(_currentMonth.year + 1, _currentMonth.month);
     });
+    BlocUtils.mainBloc.add(SearchByDateEvent(year: _currentMonth.year, mouth: _currentMonth.month));
   }
 
   // Ниже класс _EventRange мы пока не используем (на будущее)

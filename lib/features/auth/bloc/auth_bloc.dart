@@ -21,12 +21,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckNumberUseCase checkNumberUseCase;
 
   AuthBloc(this.loginUseCase, this.registrationUseCase, this.confirmCodeUseCase, this.checkNumberUseCase) : super(AuthInitial()) {
-    on<AuthEvent>((event, emit) {
-      on<AuthCheckNumberEvent>(_checkNumber);
-      on<AuthRegisterEvent>(_authRegister);
-      on<AuthLoginEvent>(_authLogin);
-      on<AuthConfirmCodeEvent>(_confirmCode);
-    });
+    // Register each event handler once
+    on<AuthCheckNumberEvent>(_checkNumber);
+    on<AuthRegisterEvent>(_authRegister);
+    on<AuthLoginEvent>(_authLogin);
+    on<AuthConfirmCodeEvent>(_confirmCode);
   }
 
   Future<void> _checkNumber(AuthCheckNumberEvent event, Emitter<AuthState> emit) async {
@@ -41,7 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _authRegister(AuthRegisterEvent event, Emitter<AuthState> emit) async {
     try {
       await registrationUseCase(RegistrationUseCaseParams(number: event.number, name: event.name));
-      // emit(Auth);
+      // You may want to emit a state here if needed.
     } catch (e) {
       emit(AuthErrorState(error: e.toString()));
     }

@@ -157,6 +157,7 @@ class _CodeScreenState extends State<CodeScreen> {
                   border: InputBorder.none,
                   fillColor: Colors.transparent,
                 ),
+
                 onChanged: (value) {
                   if (value.length > codeLength) {
                     _codeController.text = value.substring(0, codeLength);

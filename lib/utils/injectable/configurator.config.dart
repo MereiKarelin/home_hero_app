@@ -1,4 +1,3 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -26,7 +25,9 @@ import '../../domain/use_case/auth/confirm_code_use_case.dart' as _i152;
 import '../../domain/use_case/auth/login_use_case.dart' as _i408;
 import '../../domain/use_case/auth/register_use_case.dart' as _i1020;
 import '../../domain/use_case/event/add_event_use_case.dart' as _i187;
-import '../../domain/use_case/event/get_events_use_case.dart' as _i784;
+import '../../domain/use_case/event/get_events_by_day_use_case.dart' as _i608;
+import '../../domain/use_case/event/get_events_by_mounth_use_case.dart'
+    as _i595;
 import '../../domain/use_case/event/update_event_use_case.dart' as _i1002;
 import '../../domain/use_case/user/create_following_use_case.dart' as _i1002;
 import '../../domain/use_case/user/get_followers_use_case.dart' as _i448;
@@ -51,7 +52,8 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.lazySingleton<_i867.SharedDb>(() => _i867.SharedDb());
-    gh.lazySingleton<_i894.DioClient>(() => _i894.DioClient(gh<_i867.SharedDb>()));
+    gh.lazySingleton<_i894.DioClient>(
+        () => _i894.DioClient(gh<_i867.SharedDb>()));
     gh.lazySingleton<_i193.UserDataSource>(() => _i193.UserDataSourceImpl(
           gh<_i894.DioClient>(),
           gh<_i867.SharedDb>(),
@@ -64,35 +66,51 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i894.DioClient>(),
           gh<_i867.SharedDb>(),
         ));
-    gh.lazySingleton<_i998.UserRepo>(() => _i89.UserRepoImpl(userDataSource: gh<_i193.UserDataSource>()));
-    gh.lazySingleton<_i1002.CreateFollowingUseCase>(() => _i1002.CreateFollowingUseCase(repository: gh<_i998.UserRepo>()));
-    gh.lazySingleton<_i448.GetFollowersUseCase>(() => _i448.GetFollowersUseCase(repository: gh<_i998.UserRepo>()));
-    gh.lazySingleton<_i635.GetUserUseCase>(() => _i635.GetUserUseCase(repository: gh<_i998.UserRepo>()));
-    gh.lazySingleton<_i189.UpdateUserUseCase>(() => _i189.UpdateUserUseCase(repository: gh<_i998.UserRepo>()));
-    gh.lazySingleton<_i716.AuthRepo>(() => _i540.AuthRepoImpl(authDataSource: gh<_i904.AuthDataSource>()));
-    gh.lazySingleton<_i152.ConfirmCodeUseCase>(() => _i152.ConfirmCodeUseCase(repository: gh<_i716.AuthRepo>()));
-    gh.lazySingleton<_i1020.RegistrationUseCase>(() => _i1020.RegistrationUseCase(repository: gh<_i716.AuthRepo>()));
-    gh.lazySingleton<_i408.LoginUseCase>(() => _i408.LoginUseCase(repository: gh<_i716.AuthRepo>()));
-    gh.lazySingleton<_i116.CheckNumberUseCase>(() => _i116.CheckNumberUseCase(repository: gh<_i716.AuthRepo>()));
-    gh.lazySingleton<_i374.EventRepo>(() => _i212.EventRepoImpl(eventDataSource: gh<_i61.EventDataSource>()));
+    gh.lazySingleton<_i998.UserRepo>(
+        () => _i89.UserRepoImpl(userDataSource: gh<_i193.UserDataSource>()));
+    gh.lazySingleton<_i635.GetUserUseCase>(
+        () => _i635.GetUserUseCase(repository: gh<_i998.UserRepo>()));
+    gh.lazySingleton<_i1002.CreateFollowingUseCase>(
+        () => _i1002.CreateFollowingUseCase(repository: gh<_i998.UserRepo>()));
+    gh.lazySingleton<_i189.UpdateUserUseCase>(
+        () => _i189.UpdateUserUseCase(repository: gh<_i998.UserRepo>()));
+    gh.lazySingleton<_i448.GetFollowersUseCase>(
+        () => _i448.GetFollowersUseCase(repository: gh<_i998.UserRepo>()));
+    gh.lazySingleton<_i716.AuthRepo>(
+        () => _i540.AuthRepoImpl(authDataSource: gh<_i904.AuthDataSource>()));
+    gh.lazySingleton<_i152.ConfirmCodeUseCase>(
+        () => _i152.ConfirmCodeUseCase(repository: gh<_i716.AuthRepo>()));
+    gh.lazySingleton<_i1020.RegistrationUseCase>(
+        () => _i1020.RegistrationUseCase(repository: gh<_i716.AuthRepo>()));
+    gh.lazySingleton<_i408.LoginUseCase>(
+        () => _i408.LoginUseCase(repository: gh<_i716.AuthRepo>()));
+    gh.lazySingleton<_i116.CheckNumberUseCase>(
+        () => _i116.CheckNumberUseCase(repository: gh<_i716.AuthRepo>()));
+    gh.lazySingleton<_i374.EventRepo>(
+        () => _i212.EventRepoImpl(eventDataSource: gh<_i61.EventDataSource>()));
     gh.factory<_i306.FollowingBloc>(() => _i306.FollowingBloc(
           gh<_i1002.CreateFollowingUseCase>(),
           gh<_i448.GetFollowersUseCase>(),
         ));
-    gh.lazySingleton<_i784.GetEventsUseCase>(() => _i784.GetEventsUseCase(repository: gh<_i374.EventRepo>()));
-    gh.lazySingleton<_i187.AddEventUseCase>(() => _i187.AddEventUseCase(repository: gh<_i374.EventRepo>()));
-    gh.lazySingleton<_i1002.UpdateEventUseCase>(() => _i1002.UpdateEventUseCase(repository: gh<_i374.EventRepo>()));
-    gh.factory<_i299.MainBloc>(() => _i299.MainBloc(
-          gh<_i784.GetEventsUseCase>(),
-          gh<_i448.GetFollowersUseCase>(),
-          gh<_i635.GetUserUseCase>(),
-          gh<_i189.UpdateUserUseCase>(),
-        ));
+    gh.lazySingleton<_i595.GetEventsByMonthUseCase>(
+        () => _i595.GetEventsByMonthUseCase(repository: gh<_i374.EventRepo>()));
+    gh.lazySingleton<_i608.GetEventsByDayUseCase>(
+        () => _i608.GetEventsByDayUseCase(repository: gh<_i374.EventRepo>()));
+    gh.lazySingleton<_i187.AddEventUseCase>(
+        () => _i187.AddEventUseCase(repository: gh<_i374.EventRepo>()));
+    gh.lazySingleton<_i1002.UpdateEventUseCase>(
+        () => _i1002.UpdateEventUseCase(repository: gh<_i374.EventRepo>()));
     gh.factory<_i55.AuthBloc>(() => _i55.AuthBloc(
           gh<_i408.LoginUseCase>(),
           gh<_i1020.RegistrationUseCase>(),
           gh<_i152.ConfirmCodeUseCase>(),
           gh<_i116.CheckNumberUseCase>(),
+        ));
+    gh.factory<_i299.MainBloc>(() => _i299.MainBloc(
+          gh<_i595.GetEventsByMonthUseCase>(),
+          gh<_i448.GetFollowersUseCase>(),
+          gh<_i635.GetUserUseCase>(),
+          gh<_i189.UpdateUserUseCase>(),
         ));
     gh.factory<_i99.EventBloc>(() => _i99.EventBloc(
           gh<_i187.AddEventUseCase>(),

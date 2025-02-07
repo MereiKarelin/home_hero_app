@@ -26,7 +26,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: BlocBuilder<MainBloc, MainState>(
-            builder: (context, state) => state is MainLoadedState
+            builder: (context, state) => state.status == Status.success
                 ? ListView(
                     padding: EdgeInsets.zero,
                     children: <Widget>[
@@ -39,9 +39,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           CircleAvatar(
                             radius: 30,
                             backgroundColor: DColor.greenUnselectedColor,
-                            backgroundImage:
-                                state.userInfo.imageId != null ? NetworkImage('${RemoteConstants.baseUrl}/upload/uploads/${state.userInfo.imageId}') : null,
-                            child: state.userInfo.imageId != null
+                            backgroundImage: state.userInfo?.imageId != null
+                                ? NetworkImage('${RemoteConstants.baseUrl}/upload/uploads/${state.userInfo?.imageId ?? ''}')
+                                : null,
+                            child: state.userInfo?.imageId != null
                                 ? const SizedBox()
                                 : Center(
                                     child: Icon(
@@ -59,7 +60,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            state.userName,
+                            state.userName ?? '',
                             style: DTextStyle.boldBlackText,
                           ),
                         ],

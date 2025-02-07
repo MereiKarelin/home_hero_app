@@ -4,7 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:datex/data/models/user_info_model.dart';
 import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/core/d_custom_button.dart';
-import 'package:datex/features/core/d_custom_test_lable_field.dart';
+import 'package:datex/features/core/d_custom_text_lable_field.dart';
 import 'package:datex/features/core/d_image_picker_widget.dart';
 import 'package:datex/features/core/d_text_style.dart';
 import 'package:datex/features/following/following_screen.dart';
@@ -151,21 +151,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
         body: BlocConsumer<MainBloc, MainState>(
-          builder: (context, state) => state is MainLoadedState
+          builder: (context, state) => state.status == Status.success
               ? SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
                         DProfilePhotoPickerWidget(
-                          imageId: state.userInfo.imageId,
+                          imageId: state.userInfo?.imageId,
                           onImagePicked: (file) {
                             image = file;
                           },
                         ),
                         const SizedBox(height: 20),
                         DCustomTextLableField(
-                          initialText: state.userInfo.name ?? '',
+                          initialText: state.userInfo?.name ?? '',
                           controller: nameController,
                           // label: '',
                           label: 'ФИО или юридическое лицо*',
@@ -177,7 +177,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         DCustomTextLableField(
                           readOnly: onlyRead,
-                          initialText: state.userInfo.birthDate ?? '',
+                          initialText: state.userInfo?.birthDate ?? '',
                           controller: birthDateController,
                           // label: '',
                           label: 'Дата рождения*',
@@ -188,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         DCustomTextLableField(
                           readOnly: onlyRead,
-                          initialText: state.userInfo.address ?? '',
+                          initialText: state.userInfo?.address ?? '',
                           controller: addressController,
                           // label: '',
                           label: 'Юридический адрес',
@@ -199,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         DCustomTextLableField(
                           readOnly: true,
-                          initialText: state.userInfo.number,
+                          initialText: state.userInfo?.number ?? '',
                           controller: numberController,
                           // label: '',
                           label: 'Номер телефона*',
@@ -210,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         DCustomTextLableField(
                           readOnly: onlyRead,
-                          initialText: state.userInfo.email ?? '',
+                          initialText: state.userInfo?.email ?? '',
                           controller: emailController,
                           label: 'Почта',
                           // hint: 'Почта',
@@ -221,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         DCustomTextLableField(
                           readOnly: onlyRead,
-                          initialText: state.userInfo.description ?? '',
+                          initialText: state.userInfo?.description ?? '',
                           controller: descriptionController,
                           // label: '',
                           label: 'Оказываемые услуги',
@@ -232,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         DCustomTextLableField(
                           readOnly: onlyRead,
-                          initialText: state.userInfo.url ?? '',
+                          initialText: state.userInfo?.url ?? '',
                           controller: urlController,
                           // label: '',
                           label: 'Ссылка',
