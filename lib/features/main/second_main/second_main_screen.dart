@@ -112,75 +112,73 @@ class _SecondMainScreenState extends State<SecondMainScreen> {
             ),
           ],
         ),
-        body: BlocProvider(
-            create: (context) => BlocUtils.mainBloc,
-            child: BlocConsumer<MainBloc, MainState>(
-              builder: (context, state) => SingleChildScrollView(
-                  child: state is MainLoadedState
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: CalendarSlider(
-                                  events: state.events,
-                                  onDateSelected: (value) => setState(() {
-                                    widget.selectedDate = value;
-                                  }),
-                                  selectedDate: widget.selectedDate,
-                                ),
-                              ),
+        body: BlocConsumer<MainBloc, MainState>(
+          builder: (context, state) => SingleChildScrollView(
+              child: state is MainLoadedState
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: CalendarSlider(
+                              events: state.events,
+                              onDateSelected: (value) => setState(() {
+                                widget.selectedDate = value;
+                              }),
+                              selectedDate: widget.selectedDate,
                             ),
-                            // Фильтрация событий на основе выбранной даты
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(12, 20, 12, 8),
-                              child: Text(
-                                ' На сегодня запланировано',
-                                style: DTextStyle.boldBlackText.copyWith(fontSize: 16),
-                              ),
-                            ),
+                          ),
+                        ),
+                        // Фильтрация событий на основе выбранной даты
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 20, 12, 8),
+                          child: Text(
+                            ' На сегодня запланировано',
+                            style: DTextStyle.boldBlackText.copyWith(fontSize: 16),
+                          ),
+                        ),
 
-                            ListView.builder(
-                              padding: const EdgeInsets.all(12),
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: state.events
-                                  .where((event) =>
-                                      event.executionDate.year == widget.selectedDate.year &&
-                                      event.executionDate.month == widget.selectedDate.month &&
-                                      event.executionDate.day == widget.selectedDate.day)
-                                  .toList()
-                                  .length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                // Фильтруем события для выбранной даты
-                                final filteredEvents = state.events
-                                    .where((event) =>
-                                        event.executionDate.year == widget.selectedDate.year &&
-                                        event.executionDate.month == widget.selectedDate.month &&
-                                        event.executionDate.day == widget.selectedDate.day)
-                                    .toList();
+                        ListView.builder(
+                          padding: const EdgeInsets.all(12),
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.events
+                              .where((event) =>
+                                  event.executionDate.year == widget.selectedDate.year &&
+                                  event.executionDate.month == widget.selectedDate.month &&
+                                  event.executionDate.day == widget.selectedDate.day)
+                              .toList()
+                              .length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            // Фильтруем события для выбранной даты
+                            final filteredEvents = state.events
+                                .where((event) =>
+                                    event.executionDate.year == widget.selectedDate.year &&
+                                    event.executionDate.month == widget.selectedDate.month &&
+                                    event.executionDate.day == widget.selectedDate.day)
+                                .toList();
 
-                                final event = filteredEvents[index];
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 5),
-                                  child: DInfoCard(
-                                    eventModel: event,
-                                    onTap: () {},
-                                    color: event.eventType == "REGULAR" ? DColor.greenSecondColor : DColor.redUnselectedColor,
-                                    borderColor: event.eventType == "REGULAR" ? DColor.greenColor : DColor.redColor,
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        )
-                      : const Center(
-                          child: CircularProgressIndicator(),
-                        )),
-              listener: (BuildContext context, state) {},
-            )));
+                            final event = filteredEvents[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: DInfoCard(
+                                eventModel: event,
+                                onTap: () {},
+                                color: event.eventType == "REGULAR" ? DColor.greenSecondColor : DColor.redUnselectedColor,
+                                borderColor: event.eventType == "REGULAR" ? DColor.greenColor : DColor.redColor,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    )),
+          listener: (BuildContext context, state) {},
+        ));
   }
 }

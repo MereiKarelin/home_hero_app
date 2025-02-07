@@ -44,28 +44,22 @@ class DioClient {
 
           final statusCode = error.response?.statusCode;
 
-          // Проверяем, что это именно 401 или 403, указывающие на невалидный (просроченный) токен
+          // Проверяем, что это именно 401 или 403 (просроченный токен)
           if ((statusCode == 401 || statusCode == 403) && !(error.requestOptions.extra['requiresTokenRefresh'] == true)) {
-            // Ставим флаг, чтобы не зациклиться
+            // Флаг, чтобы не зациклиться
             error.requestOptions.extra['requiresTokenRefresh'] = true;
 
             try {
-              // Попробуем обновить токен
+              // Если нужно реализовать рефреш токена, раскомментируйте:
               // final newToken = await _refreshToken();
               // if (newToken != null) {
-              //   // Сохраняем токен локально
               //   await sharedDb.setString('token', newToken);
-
-              //   // Клонируем старый запрос, чтобы повторить его
               //   final opts = Options(
               //     method: error.requestOptions.method,
               //     headers: error.requestOptions.headers,
               //   );
-
-              //   // Обновляем заголовок Authorization
               //   opts.headers?['Authorization'] = 'Bearer $newToken';
-
-              //   // Делаем повторный запрос с новым токеном
+              //
               //   final cloneReq = await _dio.request(
               //     error.requestOptions.path,
               //     options: opts,
@@ -74,18 +68,14 @@ class DioClient {
               //   );
               //   return handler.resolve(cloneReq);
               // } else {
-              //   // Если newToken == null, значит обновить не удалось
-              //   // Можем выбросить ошибку или разлогинить пользователя
               //   return handler.next(error);
               // }
             } catch (e) {
               print('Ошибка при попытке обновить токен: $e');
-              // Можно сделать logout или другую обработку
               return handler.next(error);
             }
           }
 
-          // Если это не 401/403 или уже пытались рефрешить, пробрасываем ошибку дальше
           return handler.next(error);
         },
       ),
@@ -99,11 +89,13 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    return _safeRequest(() => _dio.get<T>(
-          path,
-          queryParameters: queryParameters,
-          options: options,
-        ));
+    return _safeRequest(
+      () => _dio.get<T>(
+        path,
+        queryParameters: queryParameters,
+        options: options,
+      ),
+    );
   }
 
   Future<Response<T>> post<T>(
@@ -112,12 +104,14 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    return _safeRequest(() => _dio.post<T>(
-          path,
-          data: data,
-          queryParameters: queryParameters,
-          options: options,
-        ));
+    return _safeRequest(
+      () => _dio.post<T>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      ),
+    );
   }
 
   Future<Response<T>> put<T>(
@@ -126,12 +120,14 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    return _safeRequest(() => _dio.put<T>(
-          path,
-          data: data,
-          queryParameters: queryParameters,
-          options: options,
-        ));
+    return _safeRequest(
+      () => _dio.put<T>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      ),
+    );
   }
 
   Future<Response<T>> deleteRequest<T>(
@@ -140,46 +136,70 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    return _safeRequest(() => _dio.delete<T>(
-          path,
-          data: data,
-          queryParameters: queryParameters,
-          options: options,
-        ));
+    return _safeRequest(
+      () => _dio.delete<T>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      ),
+    );
   }
 
   /// Общий метод для безопасного выполнения запроса
-  Future<Response<T>> _safeRequest<T>(Future<Response<T>> Function() requestFunc) async {
+  Future<Response<T>> _safeRequest<T>(
+    Future<Response<T>> Function() requestFunc,
+  ) async {
     try {
       return await requestFunc();
     } on DioException catch (e) {
       _handleDioError(e);
       rethrow;
-    } catch (e) {
+    } on FormatException catch (e, st) {
+      // Если где-то при парсинге JSON упадёт FormatException
+      print('Ошибка парсинга: $e\n$st');
+      rethrow;
+    } catch (e, st) {
       print('Неизвестная ошибка: $e');
+      print('StackTrace: $st');
       rethrow;
     }
   }
 
   void _handleDioError(DioException error) {
-    if (error.type == DioExceptionType.connectionTimeout || error.type == DioExceptionType.receiveTimeout) {
-      print('Ошибка таймаута: ${error.message}');
-    } else if (error.type == DioExceptionType.badResponse) {
-      // Можно проверить error.response?.statusCode
-      print('Ошибка ответа: ${error.response?.statusCode} - ${error.message}');
-    } else if (error.type == DioExceptionType.cancel) {
-      print('Запрос отменён: ${error.message}');
-    } else {
-      print('Неизвестная ошибка Dio: ${error.message}');
+    switch (error.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.receiveTimeout:
+        print('Ошибка таймаута: ${error.message}');
+        break;
+
+      case DioExceptionType.badResponse:
+        // Можно проверить error.response?.statusCode
+        print('Ошибка ответа: ${error.response?.statusCode} - ${error.message}');
+        break;
+
+      case DioExceptionType.cancel:
+        print('Запрос отменён: ${error.message}');
+        break;
+
+      case DioExceptionType.unknown:
+        // Обычно сюда попадают ошибки вроде FormatException и т.п.
+        print('Неизвестная ошибка Dio (type=unknown).');
+        print('Сообщение: ${error.message}');
+        print('error: ${error.error}');
+        print('StackTrace: ${error.stackTrace}');
+        break;
+
+      default:
+        // На всякий случай обработаем остальные типы
+        print('Ошибка Dio: ${error.type}, сообщение: ${error.message}');
+        break;
     }
   }
 
-  /// Пример метода, который обращается к вашему API, чтобы получить новый токен.
-  /// Если используете real refreshToken, то тут нужно передавать и refresh-токен.
-  /// Можно возвращать null, если рефреш не удался.
+  /// Пример метода рефреша токена (если нужно)
   Future<String?> _refreshToken() async {
     try {
-      // Допустим, у нас есть refreshToken в SharedDb
       final storedRefreshToken = sharedDb.getString('token');
       if (storedRefreshToken == null || storedRefreshToken.isEmpty) {
         return null;
@@ -197,12 +217,11 @@ class DioClient {
       final newAccessToken = response.data['token'];
       final newRefreshToken = response.data['refreshToken'];
 
-      // Сохраняем новый refreshToken, если приходит
       if (newRefreshToken != null) {
         await sharedDb.setString('refreshToken', newRefreshToken);
       }
 
-      return newAccessToken; // Возвращаем сам access-токен
+      return newAccessToken;
     } on DioException catch (e) {
       print('Ошибка при запросе нового токена: $e');
       return null;

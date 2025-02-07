@@ -22,4 +22,5 @@ class DColor {
   static const Color greenColor = Color.fromRGBO(9, 169, 39, 1);
   static const Color boldGreenColor = Color.fromRGBO(26, 117, 41, 1);
   static const Color orangeColor = Color.fromRGBO(255, 207, 125, 1);
+  static const Color orangeUnselectedColor = Color.fromRGBO(254, 255, 243, 1);
 }

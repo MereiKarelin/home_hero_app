@@ -15,12 +15,20 @@ final class MainLoadedState extends MainState {
   final List<EventModel> events;
   final List<EventModel> todayEvents;
   final List<EventModel> todayExtraEvents;
+  final UserInfoModel userInfo;
+  final List<UserInfoModel> followers;
   final String userType;
   final String userName;
   final String userId;
 
-  const MainLoadedState(
-      {required this.events, required this.todayEvents, required this.userType, required this.userId, required this.userName, required this.todayExtraEvents});
+  const MainLoadedState(this.followers,
+      {required this.events,
+      required this.todayEvents,
+      required this.userType,
+      required this.userId,
+      required this.userName,
+      required this.todayExtraEvents,
+      required this.userInfo});
 }
 
 final class MainErrorState extends MainState {}

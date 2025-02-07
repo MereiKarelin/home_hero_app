@@ -2,15 +2,23 @@ import 'package:auto_route/auto_route.dart';
 import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/core/d_text_style.dart';
 import 'package:datex/features/main/bloc/main_bloc.dart';
+import 'package:datex/features/main/widgets/followers_widget.dart';
 import 'package:datex/utils/app_router.gr.dart';
 import 'package:datex/utils/bloc_utils.dart';
+import 'package:datex/utils/remote_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
 
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  bool followers = true;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,12 +39,16 @@ class CustomDrawer extends StatelessWidget {
                           CircleAvatar(
                             radius: 30,
                             backgroundColor: DColor.greenUnselectedColor,
-                            child: Center(
-                              child: Icon(
-                                Icons.person,
-                                size: 34,
-                              ),
-                            ),
+                            backgroundImage:
+                                state.userInfo.imageId != null ? NetworkImage('${RemoteConstants.baseUrl}/upload/uploads/${state.userInfo.imageId}') : null,
+                            child: state.userInfo.imageId != null
+                                ? const SizedBox()
+                                : Center(
+                                    child: Icon(
+                                      Icons.person,
+                                      size: 34,
+                                    ),
+                                  ),
                           ),
                         ],
                       ),
@@ -76,11 +88,29 @@ class CustomDrawer extends StatelessWidget {
                             width: 4,
                           ),
                           Text("ID: ${state.userId}", style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400)),
+                          state.userType == "LEADING"
+                              ? InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      followers = !followers;
+                                    });
+                                  },
+                                  child: Icon(
+                                    followers ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
+                                    color: DColor.greyUnselectedColor,
+                                  ),
+                                )
+                              : const SizedBox()
                         ],
                       ),
+                      state.userType == "LEADING" && followers
+                          ? UsersListWidget(
+                              users: state.followers,
+                            )
+                          : const SizedBox(),
 
                       SizedBox(
-                        height: 50,
+                        height: followers ? 15 : 50,
                       ),
                       ListTile(
                         leading: SvgPicture.asset('assets/main.svg'),
@@ -115,6 +145,7 @@ class CustomDrawer extends StatelessWidget {
                           size: 15,
                         ),
                         onTap: () {
+                          AutoRouter.of(context).push(FollowingRoute());
                           // Navigate to Home screen
                           // Navigator.pushReplacementNamed(context, '/home');
                         },
@@ -219,6 +250,7 @@ class CustomDrawer extends StatelessWidget {
                           size: 15,
                         ),
                         onTap: () {
+                          AutoRouter.of(context).push(ProfileRoute());
                           // Navigate to Home screen
                           // Navigator.pushReplacementNamed(context, '/home');
                         },

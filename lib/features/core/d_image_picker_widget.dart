@@ -1,3 +1,5 @@
+import 'package:datex/features/core/d_color.dart';
+import 'package:datex/features/core/d_text_style.dart';
 import 'package:datex/utils/dio_client.dart';
 import 'package:datex/utils/injectable/configurator.dart';
 import 'package:datex/utils/remote_constants.dart';
@@ -8,7 +10,7 @@ import 'package:dio/dio.dart';
 import 'dart:io';
 
 class DPhotoPickerWidget extends StatefulWidget {
-  final Function(String url) onImagePicked;
+  final Function(File file) onImagePicked;
   const DPhotoPickerWidget({super.key, required this.onImagePicked});
 
   @override
@@ -17,7 +19,7 @@ class DPhotoPickerWidget extends StatefulWidget {
 
 class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
   File? _image;
-  bool _isUploading = false;
+  // bool _isUploading = false;
 
   Future<void> _pickImage() async {
     if (await _requestPermission(Permission.photos)) {
@@ -27,6 +29,7 @@ class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
       if (pickedFile != null) {
         setState(() {
           _image = File(pickedFile.path);
+          widget.onImagePicked(_image!);
         });
       }
     }
@@ -40,6 +43,7 @@ class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
       if (pickedFile != null) {
         setState(() {
           _image = File(pickedFile.path);
+          widget.onImagePicked(_image!);
         });
       }
     }
@@ -48,52 +52,6 @@ class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
   Future<bool> _requestPermission(Permission permission) async {
     final status = await permission.request();
     return status == PermissionStatus.granted;
-  }
-
-  Future<void> _uploadImage() async {
-    if (_image == null) {
-      _showMessage('Please select an image first.');
-      return;
-    }
-
-    setState(() {
-      _isUploading = true;
-    });
-
-    try {
-      DioClient dio = getIt.get<DioClient>();
-      ;
-      String fileName = _image!.path.split('/').last;
-
-      FormData formData = FormData.fromMap({
-        "file": await MultipartFile.fromFile(
-          _image!.path,
-          filename: fileName,
-        ),
-      });
-
-      Response response = await dio.post(
-        "${RemoteConstants.baseUrl}/upload", // Укажи URL своего бэкенда
-        data: formData,
-        options: Options(headers: {
-          "Content-Type": "multipart/form-data",
-        }),
-      );
-
-      // print(re)
-
-      if (response.statusCode == 200) {
-        _showMessage("Upload successful: ${response.data}");
-      } else {
-        _showMessage("Upload failed: ${response.statusMessage}");
-      }
-    } catch (e) {
-      _showMessage("Error: $e");
-    } finally {
-      setState(() {
-        _isUploading = false;
-      });
-    }
   }
 
   void _showMessage(String message) {
@@ -121,12 +79,6 @@ class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
           ),
         ),
         const SizedBox(height: 20),
-        _isUploading
-            ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: _uploadImage,
-                child: const Text("Upload Image"),
-              ),
       ],
     );
   }
@@ -141,7 +93,7 @@ class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
             children: <Widget>[
               ListTile(
                 leading: const Icon(Icons.photo_library),
-                title: const Text('Choose from Gallery'),
+                title: const Text('Выбрать из галереи'),
                 onTap: () {
                   _pickImage();
                   Navigator.of(context).pop();
@@ -149,7 +101,7 @@ class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
               ),
               ListTile(
                 leading: const Icon(Icons.camera_alt),
-                title: const Text('Take a Photo'),
+                title: const Text('Сделать фото'),
                 onTap: () {
                   _takePhoto();
                   Navigator.of(context).pop();
@@ -159,6 +111,131 @@ class _DPhotoPickerWidgetState extends State<DPhotoPickerWidget> {
           ),
         );
       },
+    );
+  }
+}
+
+class DProfilePhotoPickerWidget extends StatefulWidget {
+  final Function(File file) onImagePicked;
+  final String? imageId;
+
+  const DProfilePhotoPickerWidget({super.key, required this.onImagePicked, required this.imageId});
+
+  @override
+  _DProfilePhotoPickerWidgetState createState() => _DProfilePhotoPickerWidgetState();
+}
+
+class _DProfilePhotoPickerWidgetState extends State<DProfilePhotoPickerWidget> {
+  File? _image;
+
+  Future<void> _pickImage() async {
+    if (await _requestPermission(Permission.photos)) {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        setState(() {
+          _image = File(pickedFile.path);
+          widget.onImagePicked(_image!);
+        });
+      }
+    }
+  }
+
+  Future<void> _takePhoto() async {
+    if (await _requestPermission(Permission.camera)) {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+      if (pickedFile != null) {
+        setState(() {
+          _image = File(pickedFile.path);
+          widget.onImagePicked(_image!);
+        });
+      }
+    }
+  }
+
+  Future<bool> _requestPermission(Permission permission) async {
+    final status = await permission.request();
+    return status == PermissionStatus.granted;
+  }
+
+  void _showImageSourceActionSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Выбрать из галереи'),
+                onTap: () {
+                  _pickImage();
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Сделать фото'),
+                onTap: () {
+                  _takePhoto();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Круглая область под фото
+        GestureDetector(
+          onTap: _showImageSourceActionSheet, // При нажатии — выбор источника
+          child: CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.grey[300],
+            // Если фото нет, оставляем дефолтный фон.
+            // Если есть, показываем через backgroundImage.
+            backgroundImage: _image == null
+                ? widget.imageId != null
+                    ? NetworkImage('${RemoteConstants.baseUrl}/upload/uploads/${widget.imageId}')
+                    : null
+                : FileImage(_image!),
+            child: _image == null
+                ? widget.imageId != null
+                    ? const SizedBox()
+                    : const Icon(
+                        Icons.person,
+                        size: 50,
+                        color: Colors.white70,
+                      )
+                : null,
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Кнопка «Добавьте фото»
+        InkWell(
+          onTap: _showImageSourceActionSheet,
+          child: Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: DColor.greenColor)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const Text(
+                'Добавьте фото',
+                style: DTextStyle.primaryText,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

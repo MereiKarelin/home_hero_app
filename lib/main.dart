@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:datex/features/auth/bloc/auth_bloc.dart';
 import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/event/bloc/event_bloc.dart';
+import 'package:datex/features/following/bloc/following_bloc.dart';
 import 'package:datex/features/main/bloc/main_bloc.dart';
 import 'package:datex/utils/app_router.dart';
 import 'package:datex/utils/bloc_utils.dart';
@@ -98,17 +99,21 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create: (_) => getIt<AuthBloc>(), // Ваш метод получения Bloc
-            // lazy: false, // Инициализировать сразу, а не при первом использовании
+            create: (_) => BlocUtils.authBloc, // Ваш метод получения Bloc
+            lazy: false, // Инициализировать сразу, а не при первом использовании
           ),
           BlocProvider<MainBloc>(
             create: (_) => BlocUtils.mainBloc,
-            // lazy: false,
+            lazy: false,
           ),
           BlocProvider<EventBloc>(
-            create: (_) => getIt<EventBloc>(),
-            // lazy: false,
+            create: (_) => BlocUtils.eventBloc,
+            lazy: false,
           ),
+          BlocProvider<FollowingBloc>(
+            create: (_) => BlocUtils.follofingBloc,
+            lazy: false,
+          )
         ],
         child: MaterialApp.router(
           routerConfig: AppRouter().config(),

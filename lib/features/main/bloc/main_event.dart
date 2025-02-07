@@ -8,3 +8,9 @@ sealed class MainEvent extends Equatable {
 }
 
 class MainStartEvent extends MainEvent {}
+
+class UpdateUserInfoEvent extends MainEvent {
+  final UserInfoModel userInfoModel;
+
+  const UpdateUserInfoEvent({required this.userInfoModel});
+}
