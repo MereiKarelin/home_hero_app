@@ -1,3 +1,6 @@
+import 'package:datex/features/notification/bloc/notifications_bloc.dart';
+import 'package:datex/utils/bloc_utils.dart';
+import 'package:datex/utils/injectable/configurator.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -76,13 +79,15 @@ class NotificationService {
   void listenToForegroundMessages() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Received message in foreground: ${message.data}');
-
-      if (message.notification != null) {
+      final notPer = sharedDb.getBool('notifications');
+      if (notPer ?? false) {
         showLocalNotification(
-          message.notification!.title,
-          message.notification!.body,
+          message.data["title"],
+          message.data["body"],
         );
       }
+
+      // BlocUtils.notificationsBloc.add(NotificationsFetched());
     });
   }
 }

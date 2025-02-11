@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 abstract class UserDataSource {
   Future<void> createFollowing(UserInfoModel userInfoModel);
   Future<void> updateUser(UserInfoModel userInfoModel);
+  Future<void> setFirebaseToken(String token);
   Future<List<UserInfoModel>> getFollowers();
   Future<UserInfoModel> getUserInfo(String id);
 }
@@ -34,6 +35,29 @@ class UserDataSourceImpl implements UserDataSource {
         "address": userInfoModel.address,
         "coordinates": userInfoModel.location,
         "image_id": userInfoModel.imageId,
+      },
+    );
+
+    // Получаем объект (а не список).
+    final data = response.data; // может быть null
+    if (data != null) {
+      // Например, можем вывести статус и сообщение
+      print('status = ${data["status"]}');
+      print('message = ${data["message"]}');
+    }
+  }
+
+  @override
+  Future<void> setFirebaseToken(String token) async {
+    final id = _sharedDb.getInt('id');
+    final path = '/notification/setFirebaseToken';
+
+    // Здесь указываем <Map<String, dynamic>> (т.к. сервер возвращает объект).
+    final response = await _dio.post<Map<String, dynamic>>(
+      path,
+      data: {
+        "id": id,
+        "token": token,
       },
     );
 

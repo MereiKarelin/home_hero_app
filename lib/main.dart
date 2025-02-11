@@ -5,6 +5,7 @@ import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/event/bloc/event_bloc.dart';
 import 'package:datex/features/following/bloc/following_bloc.dart';
 import 'package:datex/features/main/bloc/main_bloc.dart';
+import 'package:datex/features/notification/bloc/notifications_bloc.dart';
 import 'package:datex/utils/app_router.dart';
 import 'package:datex/utils/bloc_utils.dart';
 import 'package:datex/utils/firebase_service.dart';
@@ -56,13 +57,15 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   );
 
   const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-
-  await flutterLocalNotificationsPlugin.show(
-    0, // ID уведомления
-    message.data['title'],
-    message.data['data'],
-    platformChannelSpecifics,
-  );
+  final notPer = sharedDb.getBool('notifications');
+  if (notPer ?? false) {
+    await flutterLocalNotificationsPlugin.show(
+      0, // ID уведомления
+      message.data['title'],
+      message.data['data'],
+      platformChannelSpecifics,
+    );
+  }
 
   print('Фоновое сообщение обработано: ${message.notification?.title}');
 }
@@ -112,6 +115,10 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<FollowingBloc>(
             create: (_) => BlocUtils.follofingBloc,
+            // lazy: false,
+          ),
+          BlocProvider<NotificationsBloc>(
+            create: (_) => BlocUtils.notificationsBloc,
             // lazy: false,
           )
         ],

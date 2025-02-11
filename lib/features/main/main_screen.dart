@@ -10,6 +10,7 @@ import 'package:datex/features/core/d_text_style.dart';
 import 'package:datex/features/main/bloc/main_bloc.dart';
 import 'package:datex/features/main/widgets/calendar_widget.dart';
 import 'package:datex/features/main/widgets/drawer_widget.dart'; // Убедитесь, что у вас есть этот виджет
+import 'package:datex/utils/app_router.dart';
 import 'package:datex/utils/app_router.gr.dart';
 import 'package:datex/utils/bloc_utils.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,7 @@ class _MainScreenState extends State<MainScreen> {
               IconButton(
                 icon: SvgPicture.asset('assets/settings.svg'),
                 onPressed: () {
+                  AutoRouter.of(context).push(NotificationsRoute(userId: 10));
                   // Действие при нажатии на иконку
                 },
               ),

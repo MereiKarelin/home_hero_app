@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:datex/data/models/event_model.dart';
+import 'package:datex/data/models/user_info_model.dart';
 import 'package:datex/features/core/d_color.dart';
 import 'package:datex/features/core/d_text_style.dart';
 import 'package:datex/utils/app_router.gr.dart';
@@ -31,7 +32,12 @@ class DInfoCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        AutoRouter.of(context).push(AddEventRoute(isCreate: false, eventModel: eventModel));
+        if (eventModel.eventType == "REGULAR") {
+          AutoRouter.of(context).push(AddEventRoute(isCreate: false, eventModel: eventModel));
+        } else {
+          AutoRouter.of(context).push(ExtraEventRoute(
+              isCreate: false, eventModel: eventModel, userInfoModel: UserInfoModel(name: '', number: '', location: '', address: '', imageId: '', id: 0)));
+        }
       },
       splashColor: Colors.transparent,
       child: AnimatedContainer(
@@ -71,12 +77,12 @@ class DInfoCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Медгат Мерей",
+                    eventModel.followingUserId.toString(),
                     style: DTextStyle.boldBlackText.copyWith(fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'г. ${eventModel.address}',
+                    eventModel.address,
                     style: DTextStyle.boldBlackText.copyWith(fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 4),

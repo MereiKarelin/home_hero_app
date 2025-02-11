@@ -5,10 +5,13 @@ import 'package:datex/domain/use_case/base_use_case.dart';
 import 'package:datex/domain/use_case/event/get_events_by_mounth_use_case.dart';
 import 'package:datex/domain/use_case/user/get_followers_use_case.dart';
 import 'package:datex/domain/use_case/user/get_user_info_use_case.dart';
+import 'package:datex/domain/use_case/user/set_firebase_token_use_case.dart';
 import 'package:datex/domain/use_case/user/update_user_use_case.dart';
 import 'package:datex/utils/bloc_utils.dart';
+import 'package:datex/utils/firebase_service.dart';
 import 'package:datex/utils/injectable/configurator.dart';
 import 'package:equatable/equatable.dart';
+
 import 'package:injectable/injectable.dart';
 
 part 'main_event.dart';
@@ -20,8 +23,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   final GetFollowersUseCase getFollowersUseCase;
   final GetUserUseCase getUserUseCase;
   final UpdateUserUseCase updateUserUseCase;
+  final SetFirebaseToken setFirebaseToken;
 
-  MainBloc(this.getEventsByMounthUseCase, this.getFollowersUseCase, this.getUserUseCase, this.updateUserUseCase) : super(MainState()) {
+  MainBloc(this.getEventsByMounthUseCase, this.getFollowersUseCase, this.getUserUseCase, this.updateUserUseCase, this.setFirebaseToken) : super(MainState()) {
     // Регистрируем обработчик для MainStartEvent
     on<MainStartEvent>(_load);
     on<UpdateUserInfoEvent>(_updateUser);
@@ -73,6 +77,10 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           userName: userName ?? '',
           todayExtraEvents: todayExtraEvents,
           userInfo: user));
+
+      NotificationService firebaseMessaging = NotificationService();
+      final token = await firebaseMessaging.getFcmToken();
+      await setFirebaseToken(SetFirebaseTokenParams(token: token));
     } catch (err) {
       print(err);
       emit(state.copyWith(

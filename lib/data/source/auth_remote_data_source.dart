@@ -55,5 +55,6 @@ class AuthDataSourceImpl implements AuthDataSource {
     _sharedDb.setString('name', user.name ?? '');
     _sharedDb.setString('number', user.number ?? '');
     _sharedDb.setInt('id', user.id ?? 0);
+    _sharedDb.setBool('notifications', true);
   }
 }
