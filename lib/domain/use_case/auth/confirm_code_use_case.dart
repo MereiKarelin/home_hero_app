@@ -1,6 +1,6 @@
-import 'package:datex/domain/repo/auth_repo.dart';
-import 'package:datex/domain/use_case/base_use_case.dart';
-import 'package:datex/features/core/auth_utils.dart';
+import 'package:homehero/domain/repo/auth_repo.dart';
+import 'package:homehero/domain/use_case/base_use_case.dart';
+import 'package:homehero/features/core/auth_utils.dart';
 import 'package:injectable/injectable.dart';
 
 class ConfirmCodeUseCaseParams {

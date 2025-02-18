@@ -1,4 +1,4 @@
-import 'package:datex/features/core/auth_utils.dart';
+import 'package:homehero/features/core/auth_utils.dart';
 
 abstract class AuthRepo {
   Future<bool> checkNumber(String number);

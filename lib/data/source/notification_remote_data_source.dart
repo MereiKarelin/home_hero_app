@@ -1,5 +1,5 @@
-import 'package:datex/data/models/app_notifiction_model.dart';
-import 'package:datex/utils/dio_client.dart';
+import 'package:homehero/data/models/app_notifiction_model.dart';
+import 'package:homehero/utils/dio_client.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 

@@ -1,6 +1,6 @@
-import 'package:datex/data/source/auth_remote_data_source.dart';
-import 'package:datex/domain/repo/auth_repo.dart';
-import 'package:datex/features/core/auth_utils.dart';
+import 'package:homehero/data/source/auth_remote_data_source.dart';
+import 'package:homehero/domain/repo/auth_repo.dart';
+import 'package:homehero/features/core/auth_utils.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: AuthRepo)

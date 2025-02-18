@@ -1,7 +1,7 @@
-import 'package:datex/features/core/auth_utils.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_custom_button.dart';
-import 'package:datex/features/unboarding/widgets/privacy_policy_widget.dart';
+import 'package:homehero/features/core/auth_utils.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_custom_button.dart';
+import 'package:homehero/features/unboarding/widgets/privacy_policy_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,9 +38,9 @@ class _UnboardingChooseScreenState extends State<UnboardingFirstStep> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/logo/app_icon.svg',
-                  height: 60,
+                Image(
+                  image: AssetImage('assets/logo/app_icon.png'),
+                  height: 120,
                 ),
               ],
             ),

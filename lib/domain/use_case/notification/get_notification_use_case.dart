@@ -1,6 +1,6 @@
-import 'package:datex/domain/repo/notification_repo.dart';
-import 'package:datex/domain/use_case/base_use_case.dart';
-import 'package:datex/data/models/app_notifiction_model.dart';
+import 'package:homehero/domain/repo/notification_repo.dart';
+import 'package:homehero/domain/use_case/base_use_case.dart';
+import 'package:homehero/data/models/app_notifiction_model.dart';
 import 'package:injectable/injectable.dart';
 
 class GetNotificationsParams {

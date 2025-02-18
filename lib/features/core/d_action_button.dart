@@ -1,5 +1,5 @@
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_text_style.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_text_style.dart';
 import 'package:flutter/material.dart';
 
 class DActionButton extends StatelessWidget {

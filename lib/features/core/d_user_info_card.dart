@@ -1,7 +1,7 @@
-import 'package:datex/data/models/user_info_model.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/utils/remote_constants.dart';
+import 'package:homehero/data/models/user_info_model.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/utils/remote_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

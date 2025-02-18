@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "datex" "\0"
+            VALUE "FileDescription", "homehero" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "datex" "\0"
+            VALUE "InternalName", "homehero" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "datex.exe" "\0"
-            VALUE "ProductName", "datex" "\0"
+            VALUE "OriginalFilename", "homehero.exe" "\0"
+            VALUE "ProductName", "homehero" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

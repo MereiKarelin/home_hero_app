@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_custom_button.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/features/core/d_video_player.dart';
-import 'package:datex/utils/app_router.gr.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_custom_button.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/features/core/d_video_player.dart';
+import 'package:homehero/utils/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -60,7 +60,10 @@ class _UnboardingScreenState extends State<UnboardingScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SvgPicture.asset('assets/logo/app_icon.svg'),
+                          Image(
+                            image: AssetImage('assets/logo/app_icon.png'),
+                            height: 120,
+                          ),
                           const SizedBox(
                             height: 10,
                           ),

@@ -9,23 +9,21 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:datex/data/models/event_model.dart' as _i15;
-import 'package:datex/data/models/user_info_model.dart' as _i17;
-import 'package:datex/features/auth/auth_screen.dart' as _i2;
-import 'package:datex/features/core/auth_utils.dart' as _i16;
-import 'package:datex/features/event/add_event_screen.dart' as _i1;
-import 'package:datex/features/event/extra_event_screen.dart' as _i3;
-import 'package:datex/features/following/following_screen.dart' as _i4;
-import 'package:datex/features/main/main_screen.dart' as _i5;
-import 'package:datex/features/main/second_main/second_main_screen.dart' as _i8;
-import 'package:datex/features/notification/notification_screen.dart' as _i6;
-import 'package:datex/features/profile/profile_screen.dart' as _i7;
-import 'package:datex/features/splash/splash_screen.dart' as _i9;
-import 'package:datex/features/unboarding/unboarding_choose_screen.dart'
-    as _i10;
-import 'package:datex/features/unboarding/unboarding_screen.dart' as _i11;
-import 'package:datex/features/uncoming_events/uncoming_events_screen.dart'
-    as _i12;
+import 'package:homehero/data/models/event_model.dart' as _i15;
+import 'package:homehero/data/models/user_info_model.dart' as _i17;
+import 'package:homehero/features/auth/auth_screen.dart' as _i2;
+import 'package:homehero/features/core/auth_utils.dart' as _i16;
+import 'package:homehero/features/event/add_event_screen.dart' as _i1;
+import 'package:homehero/features/event/extra_event_screen.dart' as _i3;
+import 'package:homehero/features/following/following_screen.dart' as _i4;
+import 'package:homehero/features/main/main_screen.dart' as _i5;
+import 'package:homehero/features/main/second_main/second_main_screen.dart' as _i8;
+import 'package:homehero/features/notification/notification_screen.dart' as _i6;
+import 'package:homehero/features/profile/profile_screen.dart' as _i7;
+import 'package:homehero/features/splash/splash_screen.dart' as _i9;
+import 'package:homehero/features/unboarding/unboarding_choose_screen.dart' as _i10;
+import 'package:homehero/features/unboarding/unboarding_screen.dart' as _i11;
+import 'package:homehero/features/uncoming_events/uncoming_events_screen.dart' as _i12;
 import 'package:flutter/material.dart' as _i14;
 
 /// generated route for
@@ -366,8 +364,7 @@ class SplashRoute extends _i13.PageRouteInfo<SplashRouteArgs> {
   static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<SplashRouteArgs>(orElse: () => const SplashRouteArgs());
+      final args = data.argsAs<SplashRouteArgs>(orElse: () => const SplashRouteArgs());
       return _i9.SplashPage(
         key: args.key,
         isWelcomScreen: args.isWelcomScreen,

@@ -1,6 +1,6 @@
-import 'package:datex/features/notification/bloc/notifications_bloc.dart';
-import 'package:datex/utils/bloc_utils.dart';
-import 'package:datex/utils/injectable/configurator.dart';
+import 'package:homehero/features/notification/bloc/notifications_bloc.dart';
+import 'package:homehero/utils/bloc_utils.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 

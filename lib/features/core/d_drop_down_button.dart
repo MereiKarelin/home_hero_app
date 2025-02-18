@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_text_style.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_text_style.dart';
 
 class DDropdownButtonWidget extends StatefulWidget {
   final List<Map<String, String>> items;

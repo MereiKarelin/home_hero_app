@@ -1,13 +1,13 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:datex/utils/app_router.gr.dart';
+import 'package:homehero/utils/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/data/models/event_model.dart';
-import 'package:datex/features/main/bloc/main_bloc.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/data/models/event_model.dart';
+import 'package:homehero/features/main/bloc/main_bloc.dart';
 
 class CalendarSlider extends StatefulWidget {
   final DateTime selectedDate;

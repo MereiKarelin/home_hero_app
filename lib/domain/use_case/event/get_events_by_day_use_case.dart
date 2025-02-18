@@ -1,6 +1,6 @@
-import 'package:datex/data/models/event_model.dart';
-import 'package:datex/domain/repo/event_repo.dart';
-import 'package:datex/domain/use_case/base_use_case.dart';
+import 'package:homehero/data/models/event_model.dart';
+import 'package:homehero/domain/repo/event_repo.dart';
+import 'package:homehero/domain/use_case/base_use_case.dart';
 import 'package:injectable/injectable.dart';
 
 class GetEventsByDayParams {

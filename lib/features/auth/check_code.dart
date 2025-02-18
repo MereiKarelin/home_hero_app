@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:datex/features/auth/bloc/auth_bloc.dart';
-import 'package:datex/features/core/auth_utils.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_custom_button.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/utils/app_router.gr.dart';
-import 'package:datex/utils/bloc_utils.dart';
+import 'package:homehero/features/auth/bloc/auth_bloc.dart';
+import 'package:homehero/features/core/auth_utils.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_custom_button.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/utils/app_router.gr.dart';
+import 'package:homehero/utils/bloc_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -70,9 +70,9 @@ class _CodeScreenState extends State<CodeScreen> {
               const SizedBox(
                 height: 10,
               ),
-              SvgPicture.asset(
-                'assets/logo/app_icon.svg',
-                height: 60,
+              Image(
+                image: AssetImage('assets/logo/app_icon.png'),
+                height: 120,
               ),
               const Spacer(
                 flex: 1,

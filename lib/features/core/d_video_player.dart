@@ -1,4 +1,4 @@
-import 'package:datex/features/core/d_color.dart';
+import 'package:homehero/features/core/d_color.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 

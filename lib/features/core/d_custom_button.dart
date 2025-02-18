@@ -1,4 +1,4 @@
-import 'package:datex/features/core/d_text_style.dart';
+import 'package:homehero/features/core/d_text_style.dart';
 import 'package:flutter/material.dart';
 
 class DCustomButton extends StatelessWidget {

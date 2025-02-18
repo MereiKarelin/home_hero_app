@@ -1,8 +1,8 @@
-import 'package:datex/data/models/user_info_model.dart';
+import 'package:homehero/data/models/user_info_model.dart';
 
-import 'package:datex/data/source/user_remote_date_source.dart';
+import 'package:homehero/data/source/user_remote_date_source.dart';
 
-import 'package:datex/domain/repo/user_repo.dart';
+import 'package:homehero/domain/repo/user_repo.dart';
 
 import 'package:injectable/injectable.dart';
 

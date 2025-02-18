@@ -1,8 +1,8 @@
-import 'package:datex/features/core/auth_utils.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_custom_button.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/features/unboarding/widgets/cookie_widget.dart';
+import 'package:homehero/features/core/auth_utils.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_custom_button.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/features/unboarding/widgets/cookie_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,17 +25,17 @@ class _UnboardingChooseScreenState extends State<UnboardingSecondStep> {
   int pageIndex = 0;
   AuthType? authType;
   final List<Map<String, String>> items = [
-    // {
-    //   'value': 'kz',
-    //   'label': 'Казахстан',
-    //   'icon': 'assets/flags/kz.png',
-    // },
     {
-      'value': 'ru',
-      'label': 'Россия',
-      'icon': 'assets/flags/ru.png',
+      'value': 'kz',
+      'label': 'Казахстан',
+      'icon': 'assets/flags/kz.png',
     },
-    {'value': 'by', 'label': 'Беларусь', 'icon': 'assets/flags/by.png'},
+    // {
+    //   'value': 'ru',
+    //   'label': 'Россия',
+    //   'icon': 'assets/flags/ru.png',
+    // },
+    // {'value': 'by', 'label': 'Беларусь', 'icon': 'assets/flags/by.png'},
   ];
 
   final LayerLink _layerLink = LayerLink();
@@ -122,9 +122,9 @@ class _UnboardingChooseScreenState extends State<UnboardingSecondStep> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/logo/app_icon.svg',
-                  height: 60,
+                Image(
+                  image: AssetImage('assets/logo/app_icon.png'),
+                  height: 120,
                 ),
               ],
             ),

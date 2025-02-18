@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/features/main/bloc/main_bloc.dart';
-import 'package:datex/features/main/widgets/followers_widget.dart';
-import 'package:datex/utils/app_router.gr.dart';
-import 'package:datex/utils/bloc_utils.dart';
-import 'package:datex/utils/remote_constants.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/features/main/bloc/main_bloc.dart';
+import 'package:homehero/features/main/widgets/followers_widget.dart';
+import 'package:homehero/utils/app_router.gr.dart';
+import 'package:homehero/utils/bloc_utils.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
+import 'package:homehero/utils/remote_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -135,22 +136,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           decoration: BoxDecoration(
                             color: DColor.greyUnselectedColor,
                           )),
-                      ListTile(
-                        leading: SvgPicture.asset('assets/users.svg'),
-                        title: Text(
-                          'Список ведомых',
-                          style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 15,
-                        ),
-                        onTap: () {
-                          AutoRouter.of(context).push(FollowingRoute());
-                          // Navigate to Home screen
-                          // Navigator.pushReplacementNamed(context, '/home');
-                        },
-                      ),
+                      // ListTile(
+                      //   leading: SvgPicture.asset('assets/users.svg'),
+                      //   title: Text(
+                      //     'Список ведомых',
+                      //     style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                      //   ),
+                      //   trailing: Icon(
+                      //     Icons.arrow_forward_ios_rounded,
+                      //     size: 15,
+                      //   ),
+                      //   onTap: () {
+                      //     AutoRouter.of(context).push(FollowingRoute());
+                      //     // Navigate to Home screen
+                      //     // Navigator.pushReplacementNamed(context, '/home');
+                      //   },
+                      // ),
                       Container(
                           height: 0.2,
                           decoration: BoxDecoration(
@@ -256,27 +257,27 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           // Navigator.pushReplacementNamed(context, '/home');
                         },
                       ),
-                      Container(
-                          height: 0.2,
-                          decoration: BoxDecoration(
-                            color: DColor.greyUnselectedColor,
-                          )),
-                      if (state.userType == "LEADING")
-                        ListTile(
-                          leading: SvgPicture.asset('assets/delete_user.svg'),
-                          title: Text(
-                            'Удалить/Передать',
-                            style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                          ),
-                          onTap: () {
-                            // Navigate to Home screen
-                            // Navigator.pushReplacementNamed(context, '/home');
-                          },
-                        ),
+                      // Container(
+                      //     height: 0.2,
+                      //     decoration: BoxDecoration(
+                      //       color: DColor.greyUnselectedColor,
+                      //     )),
+                      // if (state.userType == "LEADING")
+                      //   ListTile(
+                      //     leading: SvgPicture.asset('assets/delete_user.svg'),
+                      //     title: Text(
+                      //       'Удалить/Передать',
+                      //       style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                      //     ),
+                      //     trailing: Icon(
+                      //       Icons.arrow_forward_ios_rounded,
+                      //       size: 15,
+                      //     ),
+                      //     onTap: () {
+                      //       // Navigate to Home screen
+                      //       // Navigator.pushReplacementNamed(context, '/home');
+                      //     },
+                      //   ),
                       Container(
                           height: 0.2,
                           decoration: BoxDecoration(
@@ -298,47 +299,47 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             // Navigator.pushReplacementNamed(context, '/home');
                           },
                         ),
-                      Container(
-                          height: 0.2,
-                          decoration: BoxDecoration(
-                            color: DColor.greyUnselectedColor,
-                          )),
-                      if (!(state.userType == "LEADING"))
-                        ListTile(
-                          leading: SvgPicture.asset('assets/person.svg'),
-                          title: Text(
-                            'О ведущем',
-                            style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                          ),
-                          onTap: () {
-                            // Navigate to Home screen
-                            // Navigator.pushReplacementNamed(context, '/home');
-                          },
-                        ),
-                      Container(
-                          height: 0.2,
-                          decoration: BoxDecoration(
-                            color: DColor.greyUnselectedColor,
-                          )),
-                      ListTile(
-                        leading: SvgPicture.asset('assets/about_us.svg'),
-                        title: Text(
-                          'О приложении',
-                          style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 15,
-                        ),
-                        onTap: () {
-                          // Navigate to Home screen
-                          // Navigator.pushReplacementNamed(context, '/home');
-                        },
-                      ),
+                      // Container(
+                      //     height: 0.2,
+                      //     decoration: BoxDecoration(
+                      //       color: DColor.greyUnselectedColor,
+                      //     )),
+                      // if (!(state.userType == "LEADING"))
+                      //   ListTile(
+                      //     leading: SvgPicture.asset('assets/person.svg'),
+                      //     title: Text(
+                      //       'О ведущем',
+                      //       style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                      //     ),
+                      //     trailing: Icon(
+                      //       Icons.arrow_forward_ios_rounded,
+                      //       size: 15,
+                      //     ),
+                      //     onTap: () {
+                      //       // Navigate to Home screen
+                      //       // Navigator.pushReplacementNamed(context, '/home');
+                      //     },
+                      //   ),
+                      // Container(
+                      //     height: 0.2,
+                      //     decoration: BoxDecoration(
+                      //       color: DColor.greyUnselectedColor,
+                      //     )),
+                      // ListTile(
+                      //   leading: SvgPicture.asset('assets/about_us.svg'),
+                      //   title: Text(
+                      //     'О приложении',
+                      //     style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                      //   ),
+                      //   trailing: Icon(
+                      //     Icons.arrow_forward_ios_rounded,
+                      //     size: 15,
+                      //   ),
+                      //   onTap: () {
+                      //     // Navigate to Home screen
+                      //     // Navigator.pushReplacementNamed(context, '/home');
+                      //   },
+                      // ),
                       Container(
                           height: 0.2,
                           decoration: BoxDecoration(
@@ -356,6 +357,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           size: 15,
                         ),
                         onTap: () {
+                          sharedDb.remove('token');
+                          AutoRouter.of(context).push(SplashRoute(isWelcomScreen: false));
                           // Navigate to Home screen
                           // Navigator.pushReplacementNamed(context, '/home');
                         },

@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:datex/data/models/event_model.dart';
-import 'package:datex/domain/use_case/event/add_event_use_case.dart';
-import 'package:datex/domain/use_case/event/update_event_use_case.dart';
-import 'package:datex/features/main/bloc/main_bloc.dart';
-import 'package:datex/utils/bloc_utils.dart';
+import 'package:homehero/data/models/event_model.dart';
+import 'package:homehero/domain/use_case/event/add_event_use_case.dart';
+import 'package:homehero/domain/use_case/event/update_event_use_case.dart';
+import 'package:homehero/features/main/bloc/main_bloc.dart';
+import 'package:homehero/utils/bloc_utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 

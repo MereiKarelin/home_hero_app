@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:datex/data/models/event_model.dart';
-import 'package:datex/data/models/user_info_model.dart';
-import 'package:datex/domain/use_case/base_use_case.dart';
-import 'package:datex/domain/use_case/event/get_events_by_mounth_use_case.dart';
-import 'package:datex/domain/use_case/user/get_followers_use_case.dart';
-import 'package:datex/domain/use_case/user/get_user_info_use_case.dart';
-import 'package:datex/domain/use_case/user/set_firebase_token_use_case.dart';
-import 'package:datex/domain/use_case/user/update_user_use_case.dart';
-import 'package:datex/utils/bloc_utils.dart';
-import 'package:datex/utils/firebase_service.dart';
-import 'package:datex/utils/injectable/configurator.dart';
+import 'package:homehero/data/models/event_model.dart';
+import 'package:homehero/data/models/user_info_model.dart';
+import 'package:homehero/domain/use_case/base_use_case.dart';
+import 'package:homehero/domain/use_case/event/get_events_by_mounth_use_case.dart';
+import 'package:homehero/domain/use_case/user/get_followers_use_case.dart';
+import 'package:homehero/domain/use_case/user/get_user_info_use_case.dart';
+import 'package:homehero/domain/use_case/user/set_firebase_token_use_case.dart';
+import 'package:homehero/domain/use_case/user/update_user_use_case.dart';
+import 'package:homehero/utils/bloc_utils.dart';
+import 'package:homehero/utils/firebase_service.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:injectable/injectable.dart';
@@ -78,9 +78,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           todayExtraEvents: todayExtraEvents,
           userInfo: user));
 
-      NotificationService firebaseMessaging = NotificationService();
-      final token = await firebaseMessaging.getFcmToken();
-      await setFirebaseToken(SetFirebaseTokenParams(token: token));
+      // NotificationService firebaseMessaging = NotificationService();
+      // final token = await firebaseMessaging.getFcmToken();
+      // await setFirebaseToken(SetFirebaseTokenParams(token: token));
     } catch (err) {
       print(err);
       emit(state.copyWith(

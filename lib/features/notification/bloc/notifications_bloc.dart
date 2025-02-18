@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:datex/data/models/app_notifiction_model.dart';
-import 'package:datex/domain/use_case/notification/get_notification_use_case.dart';
-import 'package:datex/utils/injectable/configurator.dart';
+import 'package:homehero/data/models/app_notifiction_model.dart';
+import 'package:homehero/domain/use_case/notification/get_notification_use_case.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:injectable/injectable.dart';

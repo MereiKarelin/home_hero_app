@@ -1,15 +1,15 @@
 {
   "project_info": {
     "project_number": "779607642047",
-    "project_id": "datex-1341d",
-    "storage_bucket": "datex-1341d.firebasestorage.app"
+    "project_id": "homehero-1341d",
+    "storage_bucket": "homehero-1341d.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:779607642047:android:4128a01ab2de364c701b0a",
         "android_client_info": {
-          "package_name": "com.datex.app"
+          "package_name": "com.homehero.app"
         }
       },
       "oauth_client": [],

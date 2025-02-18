@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:datex/features/auth/bloc/auth_bloc.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/event/bloc/event_bloc.dart';
-import 'package:datex/features/following/bloc/following_bloc.dart';
-import 'package:datex/features/main/bloc/main_bloc.dart';
-import 'package:datex/features/notification/bloc/notifications_bloc.dart';
-import 'package:datex/utils/app_router.dart';
-import 'package:datex/utils/bloc_utils.dart';
-import 'package:datex/utils/firebase_service.dart';
-import 'package:datex/utils/injectable/configurator.dart';
+import 'package:homehero/features/auth/bloc/auth_bloc.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/event/bloc/event_bloc.dart';
+import 'package:homehero/features/following/bloc/following_bloc.dart';
+import 'package:homehero/features/main/bloc/main_bloc.dart';
+import 'package:homehero/features/notification/bloc/notifications_bloc.dart';
+import 'package:homehero/utils/app_router.dart';
+import 'package:homehero/utils/bloc_utils.dart';
+import 'package:homehero/utils/firebase_service.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
               checkColor: WidgetStateProperty.all(Colors.white),
               fillColor: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.selected)) {
-                  return const Color.fromRGBO(13, 196, 48, 1); // Цвет фона чекбокса, когда он выбран
+                  return DColor.greenColor; // Цвет фона чекбокса, когда он выбран
                 }
                 return Colors.white; // Цвет фона чекбокса, когда он не выбран
               }),

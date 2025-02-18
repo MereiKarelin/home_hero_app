@@ -1,5 +1,5 @@
-import 'package:datex/utils/remote_constants.dart';
-import 'package:datex/utils/shared_db.dart';
+import 'package:homehero/utils/remote_constants.dart';
+import 'package:homehero/utils/shared_db.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 

@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:datex/features/core/auth_utils.dart';
-import 'package:datex/features/unboarding/widgets/unboarding_first_step.dart';
-import 'package:datex/features/unboarding/widgets/unboarding_second_step.dart';
-import 'package:datex/features/unboarding/widgets/unboarding_third_step.dart';
-import 'package:datex/utils/app_router.gr.dart';
+import 'package:homehero/features/core/auth_utils.dart';
+import 'package:homehero/features/unboarding/widgets/unboarding_first_step.dart';
+import 'package:homehero/features/unboarding/widgets/unboarding_second_step.dart';
+import 'package:homehero/features/unboarding/widgets/unboarding_third_step.dart';
+import 'package:homehero/utils/app_router.gr.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()

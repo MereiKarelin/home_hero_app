@@ -1,8 +1,8 @@
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/utils/dio_client.dart';
-import 'package:datex/utils/injectable/configurator.dart';
-import 'package:datex/utils/remote_constants.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/utils/dio_client.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
+import 'package:homehero/utils/remote_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';

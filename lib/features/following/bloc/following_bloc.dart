@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:datex/data/models/user_info_model.dart';
-import 'package:datex/domain/use_case/base_use_case.dart';
-import 'package:datex/domain/use_case/user/create_following_use_case.dart';
-import 'package:datex/domain/use_case/user/get_followers_use_case.dart';
+import 'package:homehero/data/models/user_info_model.dart';
+import 'package:homehero/domain/use_case/base_use_case.dart';
+import 'package:homehero/domain/use_case/user/create_following_use_case.dart';
+import 'package:homehero/domain/use_case/user/get_followers_use_case.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';

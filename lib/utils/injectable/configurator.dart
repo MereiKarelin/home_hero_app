@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:datex/utils/injectable/configurator.config.dart';
-import 'package:datex/utils/shared_db.dart';
+import 'package:homehero/utils/injectable/configurator.config.dart';
+import 'package:homehero/utils/shared_db.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 

@@ -1,4 +1,4 @@
-import 'package:datex/data/models/event_model.dart';
+import 'package:homehero/data/models/event_model.dart';
 
 abstract class EventRepo {
   Future<List<EventModel>> getEventsByMonth(int year, int month);

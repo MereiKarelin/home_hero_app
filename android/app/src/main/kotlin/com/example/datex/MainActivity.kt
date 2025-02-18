@@ -1,4 +1,4 @@
-package com.datex.app
+package com.homehero.app
 
 import io.flutter.embedding.android.FlutterActivity
 

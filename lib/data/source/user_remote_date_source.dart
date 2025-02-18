@@ -1,8 +1,8 @@
-import 'package:datex/data/models/event_model.dart';
-import 'package:datex/data/models/user_info_model.dart';
+import 'package:homehero/data/models/event_model.dart';
+import 'package:homehero/data/models/user_info_model.dart';
 
-import 'package:datex/utils/dio_client.dart';
-import 'package:datex/utils/shared_db.dart';
+import 'package:homehero/utils/dio_client.dart';
+import 'package:homehero/utils/shared_db.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class UserDataSource {

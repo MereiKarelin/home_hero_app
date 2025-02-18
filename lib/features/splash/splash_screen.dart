@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/features/following/bloc/following_bloc.dart';
-import 'package:datex/features/main/bloc/main_bloc.dart';
-import 'package:datex/utils/app_router.gr.dart';
-import 'package:datex/utils/bloc_utils.dart';
-import 'package:datex/utils/injectable/configurator.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/features/following/bloc/following_bloc.dart';
+import 'package:homehero/features/main/bloc/main_bloc.dart';
+import 'package:homehero/utils/app_router.gr.dart';
+import 'package:homehero/utils/bloc_utils.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
@@ -41,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
           BlocUtils.follofingBloc.add(GetFollowersEvent());
           AutoRouter.of(context).popAndPush(const MainRoute());
         } else {
-          AutoRouter.of(context).popAndPush(const UnboardingRoute());
+          AutoRouter.of(context).popAndPush(const UnboardingChooseRoute());
         }
 
         // AutoRouter.of(context).replaceNamed(UnboardingRoute.name);

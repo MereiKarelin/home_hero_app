@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:datex/data/models/user_info_model.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_custom_button.dart';
-import 'package:datex/features/core/d_custom_text_lable_field.dart';
-import 'package:datex/features/core/d_image_picker_widget.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/features/following/following_screen.dart';
-import 'package:datex/features/main/bloc/main_bloc.dart';
-import 'package:datex/utils/bloc_utils.dart';
+import 'package:homehero/data/models/user_info_model.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_custom_button.dart';
+import 'package:homehero/features/core/d_custom_text_lable_field.dart';
+import 'package:homehero/features/core/d_image_picker_widget.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/features/following/following_screen.dart';
+import 'package:homehero/features/main/bloc/main_bloc.dart';
+import 'package:homehero/utils/bloc_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';

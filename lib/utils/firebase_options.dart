@@ -43,9 +43,9 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyB8WDZyjRim1J7OxBTfOv8tYEy4J2ZS9J0',
     appId: '1:779607642047:web:3ef58ebf909e89f9701b0a',
     messagingSenderId: '779607642047',
-    projectId: 'datex-1341d',
-    authDomain: 'datex-1341d.firebaseapp.com',
-    storageBucket: 'datex-1341d.firebasestorage.app',
+    projectId: 'homehero-1341d',
+    authDomain: 'homehero-1341d.firebaseapp.com',
+    storageBucket: 'homehero-1341d.firebasestorage.app',
     measurementId: 'G-W22F6NJNG4',
   );
 
@@ -53,35 +53,35 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyBn7Btr0NUJwnj6cavcAmgW7nX4xbh31SY',
     appId: '1:779607642047:android:4128a01ab2de364c701b0a',
     messagingSenderId: '779607642047',
-    projectId: 'datex-1341d',
-    storageBucket: 'datex-1341d.firebasestorage.app',
+    projectId: 'homehero-1341d',
+    storageBucket: 'homehero-1341d.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDN_BAQ-yVYFIAui9SjiQoMRwm1iZTFYNI',
     appId: '1:779607642047:ios:cb6fc16c2ed41b85701b0a',
     messagingSenderId: '779607642047',
-    projectId: 'datex-1341d',
-    storageBucket: 'datex-1341d.firebasestorage.app',
-    iosBundleId: 'com.datex.app',
+    projectId: 'homehero-1341d',
+    storageBucket: 'homehero-1341d.firebasestorage.app',
+    iosBundleId: 'com.homehero.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDN_BAQ-yVYFIAui9SjiQoMRwm1iZTFYNI',
     appId: '1:779607642047:ios:cb6fc16c2ed41b85701b0a',
     messagingSenderId: '779607642047',
-    projectId: 'datex-1341d',
-    storageBucket: 'datex-1341d.firebasestorage.app',
-    iosBundleId: 'com.datex.app',
+    projectId: 'homehero-1341d',
+    storageBucket: 'homehero-1341d.firebasestorage.app',
+    iosBundleId: 'com.homehero.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyB8WDZyjRim1J7OxBTfOv8tYEy4J2ZS9J0',
     appId: '1:779607642047:web:0514dac2b2bb29a5701b0a',
     messagingSenderId: '779607642047',
-    projectId: 'datex-1341d',
-    authDomain: 'datex-1341d.firebaseapp.com',
-    storageBucket: 'datex-1341d.firebasestorage.app',
+    projectId: 'homehero-1341d',
+    authDomain: 'homehero-1341d.firebaseapp.com',
+    storageBucket: 'homehero-1341d.firebasestorage.app',
     measurementId: 'G-9S2Q1YJWCJ',
   );
 }

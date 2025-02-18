@@ -1,4 +1,4 @@
-import 'package:datex/data/models/app_notifiction_model.dart';
+import 'package:homehero/data/models/app_notifiction_model.dart';
 
 abstract class NotificationRepo {
   /// Метод для получения уведомлений с пагинацией

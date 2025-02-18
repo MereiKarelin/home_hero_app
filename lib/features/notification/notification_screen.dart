@@ -1,13 +1,13 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:datex/data/models/app_notifiction_model.dart';
-import 'package:datex/features/core/d_color.dart';
-import 'package:datex/features/core/d_custom_button.dart';
-import 'package:datex/features/core/d_text_style.dart';
-import 'package:datex/features/main/widgets/drawer_widget.dart';
-import 'package:datex/features/notification/bloc/notifications_bloc.dart';
-import 'package:datex/utils/app_router.gr.dart';
-import 'package:datex/utils/bloc_utils.dart';
-import 'package:datex/utils/injectable/configurator.dart';
+import 'package:homehero/data/models/app_notifiction_model.dart';
+import 'package:homehero/features/core/d_color.dart';
+import 'package:homehero/features/core/d_custom_button.dart';
+import 'package:homehero/features/core/d_text_style.dart';
+import 'package:homehero/features/main/widgets/drawer_widget.dart';
+import 'package:homehero/features/notification/bloc/notifications_bloc.dart';
+import 'package:homehero/utils/app_router.gr.dart';
+import 'package:homehero/utils/bloc_utils.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,9 +77,9 @@ class _NotificationsPageState extends State<NotificationsScreen> {
         ),
         title: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SvgPicture.asset(
-            'assets/logo/app_icon.svg',
-            height: 50, // подберите нужный размер
+          child: Image(
+            image: AssetImage('assets/logo/app_icon.png'),
+            height: 60,
           ),
         ),
         centerTitle: true,
