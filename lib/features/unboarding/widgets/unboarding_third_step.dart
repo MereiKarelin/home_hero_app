@@ -18,8 +18,8 @@ class UnboardingThirdStep extends StatefulWidget {
 
 class _UnboardingChooseScreenState extends State<UnboardingThirdStep> {
   final roles = [
-    {'label': 'Ведущий', 'value': 'leader'},
-    {'label': 'Ведомый', 'value': 'follower'},
+    {'label': 'Worker', 'value': 'leader'},
+    {'label': 'Client', 'value': 'follower'},
   ];
   String? selectedRole;
 

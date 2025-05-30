@@ -6,6 +6,7 @@ import 'package:homehero/features/event/bloc/event_bloc.dart';
 import 'package:homehero/features/following/bloc/following_bloc.dart';
 import 'package:homehero/features/main/bloc/main_bloc.dart';
 import 'package:homehero/features/notification/bloc/notifications_bloc.dart';
+import 'package:homehero/features/subscription/bloc/subscription_bloc.dart';
 import 'package:homehero/utils/app_router.dart';
 import 'package:homehero/utils/bloc_utils.dart';
 import 'package:homehero/utils/firebase_service.dart';
@@ -120,12 +121,22 @@ class _MyAppState extends State<MyApp> {
           BlocProvider<NotificationsBloc>(
             create: (_) => BlocUtils.notificationsBloc,
             // lazy: false,
+          ),
+          BlocProvider<SubscriptionBloc>(
+            create: (_) => BlocUtils.subscriptionBloc,
+            // lazy: false,
           )
         ],
         child: MaterialApp.router(
           routerConfig: AppRouter().config(),
           theme: ThemeData(
-            primaryColor: const Color.fromRGBO(13, 196, 48, 1),
+            // теперь primarySwatch берём из DColor.primaryGreen
+            primarySwatch: DColor.primaryGreen,
+            // для accentColor, если нужно:
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: DColor.primaryGreen,
+              accentColor: DColor.accentOrange,
+            ),
             scaffoldBackgroundColor: Colors.white,
             checkboxTheme: CheckboxThemeData(
               checkColor: WidgetStateProperty.all(Colors.white),

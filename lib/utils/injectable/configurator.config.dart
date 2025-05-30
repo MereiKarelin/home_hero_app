@@ -14,26 +14,34 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../../data/repo_impl/auth_repo_impl.dart' as _i540;
 import '../../data/repo_impl/event_repo_impl.dart' as _i212;
 import '../../data/repo_impl/notification_repo_impl.dart' as _i555;
+import '../../data/repo_impl/subscriprion_repo_impl.dart' as _i855;
 import '../../data/repo_impl/user_repo_impl.dart' as _i89;
 import '../../data/source/auth_remote_data_source.dart' as _i904;
 import '../../data/source/event_remote_data_source.dart' as _i61;
 import '../../data/source/notification_remote_data_source.dart' as _i925;
+import '../../data/source/subscription_remote_data_source.dart' as _i382;
 import '../../data/source/user_remote_date_source.dart' as _i193;
 import '../../domain/repo/auth_repo.dart' as _i716;
 import '../../domain/repo/event_repo.dart' as _i374;
 import '../../domain/repo/notification_repo.dart' as _i1040;
+import '../../domain/repo/subscriprion_repo.dart' as _i376;
 import '../../domain/repo/user_repo.dart' as _i998;
 import '../../domain/use_case/auth/check_number_use_case.dart' as _i116;
 import '../../domain/use_case/auth/confirm_code_use_case.dart' as _i152;
 import '../../domain/use_case/auth/login_use_case.dart' as _i408;
 import '../../domain/use_case/auth/register_use_case.dart' as _i1020;
 import '../../domain/use_case/event/add_event_use_case.dart' as _i187;
+import '../../domain/use_case/event/assign_leader_params.dart' as _i127;
 import '../../domain/use_case/event/get_events_by_day_use_case.dart' as _i608;
 import '../../domain/use_case/event/get_events_by_mounth_use_case.dart'
     as _i595;
+import '../../domain/use_case/event/get_unassigned_events_use_case.dart'
+    as _i226;
 import '../../domain/use_case/event/update_event_use_case.dart' as _i1002;
 import '../../domain/use_case/notification/get_notification_use_case.dart'
     as _i471;
+import '../../domain/use_case/subscriprion/has_sub_use_case.dart' as _i168;
+import '../../domain/use_case/subscriprion/subscribe_use_case.dart' as _i616;
 import '../../domain/use_case/user/create_following_use_case.dart' as _i1002;
 import '../../domain/use_case/user/get_followers_use_case.dart' as _i448;
 import '../../domain/use_case/user/get_user_info_use_case.dart' as _i635;
@@ -44,6 +52,7 @@ import '../../features/event/bloc/event_bloc.dart' as _i99;
 import '../../features/following/bloc/following_bloc.dart' as _i306;
 import '../../features/main/bloc/main_bloc.dart' as _i299;
 import '../../features/notification/bloc/notifications_bloc.dart' as _i400;
+import '../../features/subscription/bloc/subscription_bloc.dart' as _i499;
 import '../dio_client.dart' as _i894;
 import '../shared_db.dart' as _i867;
 
@@ -61,39 +70,81 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i867.SharedDb>(() => _i867.SharedDb());
     gh.lazySingleton<_i894.DioClient>(
         () => _i894.DioClient(gh<_i867.SharedDb>()));
-    gh.lazySingleton<_i925.NotificationRemoteDataSource>(
-        () => _i925.NotificationRemoteDataSourceImpl(gh<_i894.DioClient>()));
     gh.lazySingleton<_i193.UserDataSource>(() => _i193.UserDataSourceImpl(
-          gh<_i894.DioClient>(),
-          gh<_i867.SharedDb>(),
-        ));
-    gh.lazySingleton<_i904.AuthDataSource>(() => _i904.AuthDataSourceImpl(
-          gh<_i894.DioClient>(),
-          gh<_i867.SharedDb>(),
-        ));
-    gh.lazySingleton<_i1040.NotificationRepo>(() => _i555.NotificationRepoImpl(
-        remoteDataSource: gh<_i925.NotificationRemoteDataSource>()));
-    gh.lazySingleton<_i61.EventDataSource>(() => _i61.EventDataSourceImpl(
           gh<_i894.DioClient>(),
           gh<_i867.SharedDb>(),
         ));
     gh.lazySingleton<_i998.UserRepo>(
         () => _i89.UserRepoImpl(userDataSource: gh<_i193.UserDataSource>()));
+    gh.lazySingleton<_i382.SubscriptionRemoteDataSource>(
+        () => _i382.SubscriptionRemoteDataSourceImpl(gh<_i894.DioClient>()));
+    gh.lazySingleton<_i925.NotificationRemoteDataSource>(
+        () => _i925.NotificationRemoteDataSourceImpl(gh<_i894.DioClient>()));
     gh.lazySingleton<_i635.GetUserUseCase>(
         () => _i635.GetUserUseCase(repository: gh<_i998.UserRepo>()));
     gh.lazySingleton<_i1002.CreateFollowingUseCase>(
         () => _i1002.CreateFollowingUseCase(repository: gh<_i998.UserRepo>()));
+    gh.lazySingleton<_i934.SetFirebaseToken>(
+        () => _i934.SetFirebaseToken(repository: gh<_i998.UserRepo>()));
     gh.lazySingleton<_i189.UpdateUserUseCase>(
         () => _i189.UpdateUserUseCase(repository: gh<_i998.UserRepo>()));
     gh.lazySingleton<_i448.GetFollowersUseCase>(
         () => _i448.GetFollowersUseCase(repository: gh<_i998.UserRepo>()));
-    gh.lazySingleton<_i934.SetFirebaseToken>(
-        () => _i934.SetFirebaseToken(repository: gh<_i998.UserRepo>()));
+    gh.lazySingleton<_i376.SubscriptionRepo>(() =>
+        _i855.SubscriptionRepoImpl(gh<_i382.SubscriptionRemoteDataSource>()));
+    gh.lazySingleton<_i61.EventDataSource>(() => _i61.EventDataSourceImpl(
+          gh<_i894.DioClient>(),
+          gh<_i867.SharedDb>(),
+        ));
+    gh.lazySingleton<_i1040.NotificationRepo>(() => _i555.NotificationRepoImpl(
+        remoteDataSource: gh<_i925.NotificationRemoteDataSource>()));
+    gh.lazySingleton<_i374.EventRepo>(
+        () => _i212.EventRepoImpl(eventDataSource: gh<_i61.EventDataSource>()));
+    gh.lazySingleton<_i904.AuthDataSource>(() => _i904.AuthDataSourceImpl(
+          gh<_i894.DioClient>(),
+          gh<_i867.SharedDb>(),
+        ));
+    gh.lazySingleton<_i595.GetEventsByMonthUseCase>(
+        () => _i595.GetEventsByMonthUseCase(repository: gh<_i374.EventRepo>()));
+    gh.lazySingleton<_i127.AssignLeaderUseCase>(
+        () => _i127.AssignLeaderUseCase(repository: gh<_i374.EventRepo>()));
+    gh.lazySingleton<_i608.GetEventsByDayUseCase>(
+        () => _i608.GetEventsByDayUseCase(repository: gh<_i374.EventRepo>()));
+    gh.lazySingleton<_i226.GetUnassignedEventsUseCase>(() =>
+        _i226.GetUnassignedEventsUseCase(repository: gh<_i374.EventRepo>()));
+    gh.lazySingleton<_i187.AddEventUseCase>(
+        () => _i187.AddEventUseCase(repository: gh<_i374.EventRepo>()));
+    gh.lazySingleton<_i1002.UpdateEventUseCase>(
+        () => _i1002.UpdateEventUseCase(repository: gh<_i374.EventRepo>()));
+    gh.factory<_i299.MainBloc>(() => _i299.MainBloc(
+          gh<_i595.GetEventsByMonthUseCase>(),
+          gh<_i448.GetFollowersUseCase>(),
+          gh<_i635.GetUserUseCase>(),
+          gh<_i189.UpdateUserUseCase>(),
+          gh<_i934.SetFirebaseToken>(),
+          gh<_i226.GetUnassignedEventsUseCase>(),
+          gh<_i127.AssignLeaderUseCase>(),
+        ));
+    gh.factory<_i306.FollowingBloc>(() => _i306.FollowingBloc(
+          gh<_i1002.CreateFollowingUseCase>(),
+          gh<_i448.GetFollowersUseCase>(),
+        ));
+    gh.lazySingleton<_i616.SubscribeUseCase>(
+        () => _i616.SubscribeUseCase(repository: gh<_i376.SubscriptionRepo>()));
+    gh.lazySingleton<_i168.HasActiveSubscriptionUseCase>(() =>
+        _i168.HasActiveSubscriptionUseCase(
+            repository: gh<_i376.SubscriptionRepo>()));
     gh.lazySingleton<_i471.GetNotificationsUseCase>(() =>
         _i471.GetNotificationsUseCase(
             repository: gh<_i1040.NotificationRepo>()));
+    gh.factory<_i499.SubscriptionBloc>(
+        () => _i499.SubscriptionBloc(gh<_i616.SubscribeUseCase>()));
     gh.factory<_i400.NotificationsBloc>(() => _i400.NotificationsBloc(
         getNotificationsUseCase: gh<_i471.GetNotificationsUseCase>()));
+    gh.factory<_i99.EventBloc>(() => _i99.EventBloc(
+          gh<_i187.AddEventUseCase>(),
+          gh<_i1002.UpdateEventUseCase>(),
+        ));
     gh.lazySingleton<_i716.AuthRepo>(
         () => _i540.AuthRepoImpl(authDataSource: gh<_i904.AuthDataSource>()));
     gh.lazySingleton<_i152.ConfirmCodeUseCase>(
@@ -104,36 +155,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i408.LoginUseCase(repository: gh<_i716.AuthRepo>()));
     gh.lazySingleton<_i116.CheckNumberUseCase>(
         () => _i116.CheckNumberUseCase(repository: gh<_i716.AuthRepo>()));
-    gh.lazySingleton<_i374.EventRepo>(
-        () => _i212.EventRepoImpl(eventDataSource: gh<_i61.EventDataSource>()));
-    gh.factory<_i306.FollowingBloc>(() => _i306.FollowingBloc(
-          gh<_i1002.CreateFollowingUseCase>(),
-          gh<_i448.GetFollowersUseCase>(),
-        ));
-    gh.lazySingleton<_i595.GetEventsByMonthUseCase>(
-        () => _i595.GetEventsByMonthUseCase(repository: gh<_i374.EventRepo>()));
-    gh.lazySingleton<_i608.GetEventsByDayUseCase>(
-        () => _i608.GetEventsByDayUseCase(repository: gh<_i374.EventRepo>()));
-    gh.lazySingleton<_i187.AddEventUseCase>(
-        () => _i187.AddEventUseCase(repository: gh<_i374.EventRepo>()));
-    gh.lazySingleton<_i1002.UpdateEventUseCase>(
-        () => _i1002.UpdateEventUseCase(repository: gh<_i374.EventRepo>()));
     gh.factory<_i55.AuthBloc>(() => _i55.AuthBloc(
           gh<_i408.LoginUseCase>(),
           gh<_i1020.RegistrationUseCase>(),
           gh<_i152.ConfirmCodeUseCase>(),
           gh<_i116.CheckNumberUseCase>(),
-        ));
-    gh.factory<_i299.MainBloc>(() => _i299.MainBloc(
-          gh<_i595.GetEventsByMonthUseCase>(),
-          gh<_i448.GetFollowersUseCase>(),
-          gh<_i635.GetUserUseCase>(),
-          gh<_i189.UpdateUserUseCase>(),
-          gh<_i934.SetFirebaseToken>(),
-        ));
-    gh.factory<_i99.EventBloc>(() => _i99.EventBloc(
-          gh<_i187.AddEventUseCase>(),
-          gh<_i1002.UpdateEventUseCase>(),
         ));
     return this;
   }

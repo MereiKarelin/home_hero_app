@@ -30,4 +30,10 @@ class EventRepoImpl implements EventRepo {
   Future<void> updateEvent(String id, EventModel event) {
     return eventDataSource.updateEvent(id, event);
   }
+
+  @override
+  Future<List<EventModel>> getUnassignedEvents() => eventDataSource.getUnassignedEvents();
+
+  @override
+  Future<void> assignLeader(int eventId, int leaderId) => eventDataSource.assignLeader(eventId, leaderId);
 }

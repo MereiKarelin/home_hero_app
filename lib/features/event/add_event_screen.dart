@@ -13,6 +13,7 @@ import 'package:homehero/utils/bloc_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:homehero/utils/injectable/configurator.dart';
 import 'package:intl/intl.dart';
 
 @RoutePage()
@@ -32,9 +33,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
   final TextEditingController dataController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController commentController = TextEditingController();
+  String? type = 'LEADING';
 
   @override
   void initState() {
+    type = sharedDb.getString('userType');
     dataController.text = DateFormat('dd.MM.yyyy').format(DateTime.now());
     if (!widget.isCreate) {
       setState(() {
@@ -83,48 +86,59 @@ class _AddEventScreenState extends State<AddEventScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  DCustomButton(
-                    text: widget.isCreate ? 'Создать событие' : 'Редактировать событие',
-                    onTap: () async {
-                      if (widget.isCreate) {
-                        BlocUtils.eventBloc.add(AddEvEvent(
-                            eventModel: EventModel(
-                                id: 0,
-                                leaderUserId: 0,
-                                followingUserId: int.parse(selectedValue3 ?? '0'),
-                                title: descriptionController.text,
-                                description: commentController.text,
-                                assignedDate: DateTime.now(),
-                                executionDate: DateFormat('dd.MM.yyyy').parse(dataController.text),
-                                endDate: DateTime.now(),
-                                address: '',
-                                eventType: 'REGULAR',
-                                repeatPeriod: selectedValue ?? 'ONCE',
-                                confirmed: false,
-                                imageIds: [])));
-                      } else {
-                        BlocUtils.eventBloc.add(UpdateEvEvent(
-                            eventModel: EventModel(
-                                id: widget.eventModel?.id ?? 0,
-                                leaderUserId: widget.eventModel?.leaderUserId ?? 0,
-                                followingUserId: widget.eventModel?.followingUserId ?? 0,
-                                title: descriptionController.text,
-                                description: commentController.text,
-                                assignedDate: widget.eventModel?.assignedDate ?? DateTime.now(),
-                                executionDate: DateFormat('dd.MM.yyyy').parse(dataController.text),
-                                endDate: widget.eventModel?.endDate ?? DateTime.now(),
-                                address: widget.eventModel?.address ?? '',
-                                eventType: widget.eventModel?.eventType ?? '',
-                                repeatPeriod: selectedValue ?? 'ONCE',
-                                confirmed: widget.eventModel?.confirmed,
-                                imageIds: [])));
-                      }
+                  if (type == "FOLLOWING")
+                    DCustomButton(
+                      text: widget.isCreate ? 'Создать событие' : 'Редактировать событие',
+                      onTap: () async {
+                        if (widget.isCreate) {
+                          BlocUtils.eventBloc.add(AddEvEvent(
+                              eventModel: EventModel(
+                                  id: 0,
+                                  leaderUserId: 0,
+                                  followingUserId: int.parse(selectedValue3 ?? '0'),
+                                  title: descriptionController.text,
+                                  description: commentController.text,
+                                  assignedDate: DateTime.now(),
+                                  executionDate: DateFormat('dd.MM.yyyy').parse(dataController.text),
+                                  endDate: DateTime.now(),
+                                  address: '',
+                                  eventType: 'REGULAR',
+                                  repeatPeriod: selectedValue ?? 'ONCE',
+                                  confirmed: false,
+                                  imageIds: [])));
+                        } else {
+                          BlocUtils.eventBloc.add(UpdateEvEvent(
+                              eventModel: EventModel(
+                                  id: widget.eventModel?.id ?? 0,
+                                  leaderUserId: widget.eventModel?.leaderUserId ?? 0,
+                                  followingUserId: widget.eventModel?.followingUserId ?? 0,
+                                  title: descriptionController.text,
+                                  description: commentController.text,
+                                  assignedDate: widget.eventModel?.assignedDate ?? DateTime.now(),
+                                  executionDate: DateFormat('dd.MM.yyyy').parse(dataController.text),
+                                  endDate: widget.eventModel?.endDate ?? DateTime.now(),
+                                  address: widget.eventModel?.address ?? '',
+                                  eventType: widget.eventModel?.eventType ?? '',
+                                  repeatPeriod: selectedValue ?? 'ONCE',
+                                  confirmed: widget.eventModel?.confirmed,
+                                  imageIds: [])));
+                        }
 
-                      await Future.delayed(Duration(seconds: 2));
-                      Navigator.pop(context);
-                    },
-                    gradient: DColor.primaryGreenGradient,
-                  ),
+                        await Future.delayed(Duration(seconds: 2));
+                        Navigator.pop(context);
+                      },
+                      gradient: DColor.primaryGreenGradient,
+                    ),
+                  if (type == "LEADING")
+                    DCustomButton(
+                      text: 'Принять',
+                      onTap: () async {
+                        BlocUtils.mainBloc.add(AssignLeader(widget.eventModel?.id ?? 0));
+                        await Future.delayed(Duration(seconds: 2));
+                        Navigator.pop(context);
+                      },
+                      gradient: DColor.primaryGreenGradient,
+                    ),
                   const SizedBox(height: 20),
                   DCustomButton(
                     text: 'Назад',
@@ -198,23 +212,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      DDropdownButtonWidget(
-                        readOnly: selectedValue3 != null,
-                        text: 'Выберите Обьект*',
-                        items: state.followers
-                            .map((follower) =>
-                                {'value': follower.id.toString(), 'label': '${follower.name}\n${follower.address ?? ''}\n${follower.location ?? ''}'})
-                            .toList(),
-
-                        selectedValue: selectedValue3,
-                        onSelectCountry: (String val) {
-                          setState(() {
-                            selectedValue3 = val;
-                          });
-                        },
-                        layerLink: _layerLink3, // Pass the first LayerLink here
-                      ),
-                      const SizedBox(height: 30),
                       DCustomTextLableField(
                         readOnly: false,
                         initialText: dataController.text,
@@ -230,19 +227,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         textStyle: DTextStyle.primaryText.copyWith(color: DColor.greyColor, fontSize: 14),
                         controller: descriptionController,
                         label: 'Добавьте описание события*',
-                      ),
-                      const SizedBox(height: 30),
-                      DDropdownButtonWidget(
-                        readOnly: false,
-                        text: 'Выберете сервисный интервал*',
-                        items: items,
-                        selectedValue: selectedValue,
-                        onSelectCountry: (String country) {
-                          setState(() {
-                            selectedValue = country;
-                          });
-                        },
-                        layerLink: _layerLink1, // Pass the first LayerLink here
                       ),
                       const SizedBox(height: 30),
                       DDropdownButtonWidget(

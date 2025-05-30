@@ -133,39 +133,34 @@ class _MainScreenState extends State<MainScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          state.userType == 'LEADING'
-                              ? DActionButton(
-                                  text: 'Создать событие',
-                                  onTap: () {
-                                    AutoRouter.of(context).push(AddEventRoute(isCreate: true));
-                                  },
-                                  icon: const Icon(Icons.add),
-                                  color: DColor.greenColor,
-                                  width: MediaQuery.of(context).size.width / 2.3,
-                                )
-                              : Expanded(
-                                  child: DActionButton(
-                                    text: 'Создать экстренное событие',
-                                    onTap: () {
-                                      AutoRouter.of(context).push(ExtraEventRoute(
-                                        isCreate: true,
-                                        userInfoModel: state.userInfo ?? UserInfoModel(name: '', number: '', location: '', address: '', imageId: '', id: 0),
-                                      ));
-                                    },
-                                    icon: const Icon(Icons.add),
-                                    color: DColor.greenColor,
-                                  ),
-                                ),
-                          state.userType == 'LEADING'
-                              ? DActionButton(
-                                  text: 'Создать ведомого',
-                                  onTap: () {
-                                    AutoRouter.of(context).push(FollowingRoute());
-                                  },
-                                  icon: const Icon(Icons.add),
-                                  color: DColor.greenColor,
-                                  width: MediaQuery.of(context).size.width / 2.3)
-                              : const SizedBox()
+                          if (state.userType != 'LEADING')
+                            DActionButton(
+                              text: 'Create event',
+                              onTap: () {
+                                AutoRouter.of(context).push(AddEventRoute(isCreate: true));
+                              },
+                              icon: const Icon(Icons.add),
+                              color: DColor.greenColor,
+                              width: MediaQuery.of(context).size.width / 2.3,
+                            ),
+                          if (state.userType != 'LEADING')
+                            const SizedBox(
+                              width: 5,
+                            ),
+                          if (state.userType != 'LEADING')
+                            Expanded(
+                              child: DActionButton(
+                                text: 'Create extra event',
+                                onTap: () {
+                                  AutoRouter.of(context).push(ExtraEventRoute(
+                                    isCreate: true,
+                                    userInfoModel: state.userInfo ?? UserInfoModel(name: '', number: '', location: '', address: '', imageId: '', id: 0),
+                                  ));
+                                },
+                                icon: const Icon(Icons.add),
+                                color: DColor.greenColor,
+                              ),
+                            ),
                         ],
                       ),
                       const SizedBox(

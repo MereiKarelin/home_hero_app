@@ -8,32 +8,41 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:homehero/data/models/event_model.dart' as _i15;
-import 'package:homehero/data/models/user_info_model.dart' as _i17;
+import 'package:auto_route/auto_route.dart' as _i15;
+import 'package:flutter/cupertino.dart' as _i20;
+import 'package:flutter/material.dart' as _i16;
+import 'package:homehero/data/models/event_model.dart' as _i17;
+import 'package:homehero/data/models/subscription_model.dart' as _i21;
+import 'package:homehero/data/models/user_info_model.dart' as _i19;
 import 'package:homehero/features/auth/auth_screen.dart' as _i2;
-import 'package:homehero/features/core/auth_utils.dart' as _i16;
+import 'package:homehero/features/core/auth_utils.dart' as _i18;
 import 'package:homehero/features/event/add_event_screen.dart' as _i1;
 import 'package:homehero/features/event/extra_event_screen.dart' as _i3;
 import 'package:homehero/features/following/following_screen.dart' as _i4;
 import 'package:homehero/features/main/main_screen.dart' as _i5;
-import 'package:homehero/features/main/second_main/second_main_screen.dart' as _i8;
+import 'package:homehero/features/main/second_main/second_main_screen.dart'
+    as _i8;
 import 'package:homehero/features/notification/notification_screen.dart' as _i6;
 import 'package:homehero/features/profile/profile_screen.dart' as _i7;
 import 'package:homehero/features/splash/splash_screen.dart' as _i9;
-import 'package:homehero/features/unboarding/unboarding_choose_screen.dart' as _i10;
-import 'package:homehero/features/unboarding/unboarding_screen.dart' as _i11;
-import 'package:homehero/features/uncoming_events/uncoming_events_screen.dart' as _i12;
-import 'package:flutter/material.dart' as _i14;
+import 'package:homehero/features/subscription/subscription_payment_screen.dart'
+    as _i10;
+import 'package:homehero/features/subscription/subscription_select_screen.dart'
+    as _i11;
+import 'package:homehero/features/unboarding/unboarding_choose_screen.dart'
+    as _i12;
+import 'package:homehero/features/unboarding/unboarding_screen.dart' as _i13;
+import 'package:homehero/features/uncoming_events/uncoming_events_screen.dart'
+    as _i14;
 
 /// generated route for
 /// [_i1.AddEventScreen]
-class AddEventRoute extends _i13.PageRouteInfo<AddEventRouteArgs> {
+class AddEventRoute extends _i15.PageRouteInfo<AddEventRouteArgs> {
   AddEventRoute({
-    _i14.Key? key,
+    _i16.Key? key,
     required bool isCreate,
-    _i15.EventModel? eventModel,
-    List<_i13.PageRouteInfo>? children,
+    _i17.EventModel? eventModel,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           AddEventRoute.name,
           args: AddEventRouteArgs(
@@ -46,7 +55,7 @@ class AddEventRoute extends _i13.PageRouteInfo<AddEventRouteArgs> {
 
   static const String name = 'AddEventRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AddEventRouteArgs>();
@@ -66,11 +75,11 @@ class AddEventRouteArgs {
     this.eventModel,
   });
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   final bool isCreate;
 
-  final _i15.EventModel? eventModel;
+  final _i17.EventModel? eventModel;
 
   @override
   String toString() {
@@ -80,13 +89,13 @@ class AddEventRouteArgs {
 
 /// generated route for
 /// [_i2.AuthScreen]
-class AuthRoute extends _i13.PageRouteInfo<AuthRouteArgs> {
+class AuthRoute extends _i15.PageRouteInfo<AuthRouteArgs> {
   AuthRoute({
-    _i14.Key? key,
+    _i16.Key? key,
     required String country,
-    required _i16.AuthType authType,
-    required _i16.UserType userType,
-    List<_i13.PageRouteInfo>? children,
+    required _i18.AuthType authType,
+    required _i18.UserType userType,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           AuthRoute.name,
           args: AuthRouteArgs(
@@ -100,7 +109,7 @@ class AuthRoute extends _i13.PageRouteInfo<AuthRouteArgs> {
 
   static const String name = 'AuthRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AuthRouteArgs>();
@@ -122,13 +131,13 @@ class AuthRouteArgs {
     required this.userType,
   });
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   final String country;
 
-  final _i16.AuthType authType;
+  final _i18.AuthType authType;
 
-  final _i16.UserType userType;
+  final _i18.UserType userType;
 
   @override
   String toString() {
@@ -138,13 +147,13 @@ class AuthRouteArgs {
 
 /// generated route for
 /// [_i3.ExtraEventScreen]
-class ExtraEventRoute extends _i13.PageRouteInfo<ExtraEventRouteArgs> {
+class ExtraEventRoute extends _i15.PageRouteInfo<ExtraEventRouteArgs> {
   ExtraEventRoute({
-    _i14.Key? key,
+    _i16.Key? key,
     required bool isCreate,
-    _i15.EventModel? eventModel,
-    required _i17.UserInfoModel userInfoModel,
-    List<_i13.PageRouteInfo>? children,
+    _i17.EventModel? eventModel,
+    required _i19.UserInfoModel userInfoModel,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           ExtraEventRoute.name,
           args: ExtraEventRouteArgs(
@@ -158,7 +167,7 @@ class ExtraEventRoute extends _i13.PageRouteInfo<ExtraEventRouteArgs> {
 
   static const String name = 'ExtraEventRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<ExtraEventRouteArgs>();
@@ -180,13 +189,13 @@ class ExtraEventRouteArgs {
     required this.userInfoModel,
   });
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   final bool isCreate;
 
-  final _i15.EventModel? eventModel;
+  final _i17.EventModel? eventModel;
 
-  final _i17.UserInfoModel userInfoModel;
+  final _i19.UserInfoModel userInfoModel;
 
   @override
   String toString() {
@@ -196,8 +205,8 @@ class ExtraEventRouteArgs {
 
 /// generated route for
 /// [_i4.FollowingScreen]
-class FollowingRoute extends _i13.PageRouteInfo<void> {
-  const FollowingRoute({List<_i13.PageRouteInfo>? children})
+class FollowingRoute extends _i15.PageRouteInfo<void> {
+  const FollowingRoute({List<_i15.PageRouteInfo>? children})
       : super(
           FollowingRoute.name,
           initialChildren: children,
@@ -205,7 +214,7 @@ class FollowingRoute extends _i13.PageRouteInfo<void> {
 
   static const String name = 'FollowingRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       return const _i4.FollowingScreen();
@@ -215,8 +224,8 @@ class FollowingRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.MainScreen]
-class MainRoute extends _i13.PageRouteInfo<void> {
-  const MainRoute({List<_i13.PageRouteInfo>? children})
+class MainRoute extends _i15.PageRouteInfo<void> {
+  const MainRoute({List<_i15.PageRouteInfo>? children})
       : super(
           MainRoute.name,
           initialChildren: children,
@@ -224,7 +233,7 @@ class MainRoute extends _i13.PageRouteInfo<void> {
 
   static const String name = 'MainRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       return const _i5.MainScreen();
@@ -234,11 +243,11 @@ class MainRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.NotificationsScreen]
-class NotificationsRoute extends _i13.PageRouteInfo<NotificationsRouteArgs> {
+class NotificationsRoute extends _i15.PageRouteInfo<NotificationsRouteArgs> {
   NotificationsRoute({
-    _i14.Key? key,
+    _i20.Key? key,
     required int userId,
-    List<_i13.PageRouteInfo>? children,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           NotificationsRoute.name,
           args: NotificationsRouteArgs(
@@ -250,7 +259,7 @@ class NotificationsRoute extends _i13.PageRouteInfo<NotificationsRouteArgs> {
 
   static const String name = 'NotificationsRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<NotificationsRouteArgs>();
@@ -268,7 +277,7 @@ class NotificationsRouteArgs {
     required this.userId,
   });
 
-  final _i14.Key? key;
+  final _i20.Key? key;
 
   final int userId;
 
@@ -280,8 +289,8 @@ class NotificationsRouteArgs {
 
 /// generated route for
 /// [_i7.ProfileScreen]
-class ProfileRoute extends _i13.PageRouteInfo<void> {
-  const ProfileRoute({List<_i13.PageRouteInfo>? children})
+class ProfileRoute extends _i15.PageRouteInfo<void> {
+  const ProfileRoute({List<_i15.PageRouteInfo>? children})
       : super(
           ProfileRoute.name,
           initialChildren: children,
@@ -289,7 +298,7 @@ class ProfileRoute extends _i13.PageRouteInfo<void> {
 
   static const String name = 'ProfileRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       return const _i7.ProfileScreen();
@@ -299,11 +308,11 @@ class ProfileRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.SecondMainScreen]
-class SecondMainRoute extends _i13.PageRouteInfo<SecondMainRouteArgs> {
+class SecondMainRoute extends _i15.PageRouteInfo<SecondMainRouteArgs> {
   SecondMainRoute({
-    _i14.Key? key,
+    _i16.Key? key,
     required DateTime selectedDate,
-    List<_i13.PageRouteInfo>? children,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           SecondMainRoute.name,
           args: SecondMainRouteArgs(
@@ -315,7 +324,7 @@ class SecondMainRoute extends _i13.PageRouteInfo<SecondMainRouteArgs> {
 
   static const String name = 'SecondMainRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<SecondMainRouteArgs>();
@@ -333,7 +342,7 @@ class SecondMainRouteArgs {
     required this.selectedDate,
   });
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   final DateTime selectedDate;
 
@@ -345,11 +354,11 @@ class SecondMainRouteArgs {
 
 /// generated route for
 /// [_i9.SplashPage]
-class SplashRoute extends _i13.PageRouteInfo<SplashRouteArgs> {
+class SplashRoute extends _i15.PageRouteInfo<SplashRouteArgs> {
   SplashRoute({
-    _i14.Key? key,
+    _i16.Key? key,
     bool? isWelcomScreen,
-    List<_i13.PageRouteInfo>? children,
+    List<_i15.PageRouteInfo>? children,
   }) : super(
           SplashRoute.name,
           args: SplashRouteArgs(
@@ -361,10 +370,11 @@ class SplashRoute extends _i13.PageRouteInfo<SplashRouteArgs> {
 
   static const String name = 'SplashRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<SplashRouteArgs>(orElse: () => const SplashRouteArgs());
+      final args =
+          data.argsAs<SplashRouteArgs>(orElse: () => const SplashRouteArgs());
       return _i9.SplashPage(
         key: args.key,
         isWelcomScreen: args.isWelcomScreen,
@@ -379,7 +389,7 @@ class SplashRouteArgs {
     this.isWelcomScreen,
   });
 
-  final _i14.Key? key;
+  final _i16.Key? key;
 
   final bool? isWelcomScreen;
 
@@ -390,9 +400,75 @@ class SplashRouteArgs {
 }
 
 /// generated route for
-/// [_i10.UnboardingChooseScreen]
-class UnboardingChooseRoute extends _i13.PageRouteInfo<void> {
-  const UnboardingChooseRoute({List<_i13.PageRouteInfo>? children})
+/// [_i10.SubscriptionPaymentScreen]
+class SubscriptionPaymentRoute
+    extends _i15.PageRouteInfo<SubscriptionPaymentRouteArgs> {
+  SubscriptionPaymentRoute({
+    _i16.Key? key,
+    required _i21.SubscriptionTypeModel type,
+    List<_i15.PageRouteInfo>? children,
+  }) : super(
+          SubscriptionPaymentRoute.name,
+          args: SubscriptionPaymentRouteArgs(
+            key: key,
+            type: type,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SubscriptionPaymentRoute';
+
+  static _i15.PageInfo page = _i15.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SubscriptionPaymentRouteArgs>();
+      return _i10.SubscriptionPaymentScreen(
+        key: args.key,
+        type: args.type,
+      );
+    },
+  );
+}
+
+class SubscriptionPaymentRouteArgs {
+  const SubscriptionPaymentRouteArgs({
+    this.key,
+    required this.type,
+  });
+
+  final _i16.Key? key;
+
+  final _i21.SubscriptionTypeModel type;
+
+  @override
+  String toString() {
+    return 'SubscriptionPaymentRouteArgs{key: $key, type: $type}';
+  }
+}
+
+/// generated route for
+/// [_i11.SubscriptionSelectionScreen]
+class SubscriptionSelectionRoute extends _i15.PageRouteInfo<void> {
+  const SubscriptionSelectionRoute({List<_i15.PageRouteInfo>? children})
+      : super(
+          SubscriptionSelectionRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SubscriptionSelectionRoute';
+
+  static _i15.PageInfo page = _i15.PageInfo(
+    name,
+    builder: (data) {
+      return const _i11.SubscriptionSelectionScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i12.UnboardingChooseScreen]
+class UnboardingChooseRoute extends _i15.PageRouteInfo<void> {
+  const UnboardingChooseRoute({List<_i15.PageRouteInfo>? children})
       : super(
           UnboardingChooseRoute.name,
           initialChildren: children,
@@ -400,18 +476,18 @@ class UnboardingChooseRoute extends _i13.PageRouteInfo<void> {
 
   static const String name = 'UnboardingChooseRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i10.UnboardingChooseScreen();
+      return const _i12.UnboardingChooseScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i11.UnboardingScreen]
-class UnboardingRoute extends _i13.PageRouteInfo<void> {
-  const UnboardingRoute({List<_i13.PageRouteInfo>? children})
+/// [_i13.UnboardingScreen]
+class UnboardingRoute extends _i15.PageRouteInfo<void> {
+  const UnboardingRoute({List<_i15.PageRouteInfo>? children})
       : super(
           UnboardingRoute.name,
           initialChildren: children,
@@ -419,18 +495,18 @@ class UnboardingRoute extends _i13.PageRouteInfo<void> {
 
   static const String name = 'UnboardingRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i11.UnboardingScreen();
+      return const _i13.UnboardingScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i12.UncomingEventsScreen]
-class UncomingEventsRoute extends _i13.PageRouteInfo<void> {
-  const UncomingEventsRoute({List<_i13.PageRouteInfo>? children})
+/// [_i14.UncomingEventsScreen]
+class UncomingEventsRoute extends _i15.PageRouteInfo<void> {
+  const UncomingEventsRoute({List<_i15.PageRouteInfo>? children})
       : super(
           UncomingEventsRoute.name,
           initialChildren: children,
@@ -438,10 +514,10 @@ class UncomingEventsRoute extends _i13.PageRouteInfo<void> {
 
   static const String name = 'UncomingEventsRoute';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      return const _i12.UncomingEventsScreen();
+      return const _i14.UncomingEventsScreen();
     },
   );
 }

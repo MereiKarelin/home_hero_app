@@ -15,6 +15,9 @@ abstract class EventDataSource {
 
   /// Обновить существующее событие по его ID
   Future<void> updateEvent(String id, EventModel event);
+
+  Future<List<EventModel>> getUnassignedEvents();
+  Future<void> assignLeader(int eventId, int leaderId);
 }
 
 @LazySingleton(as: EventDataSource)
@@ -166,5 +169,25 @@ class EventDataSourceImpl implements EventDataSource {
     } else {
       print('No data received');
     }
+  }
+
+  @override
+  Future<List<EventModel>> getUnassignedEvents() async {
+    // делаем запрос и ожидаем List в поле data
+    final response = await _dio.get<List>(
+      '/events/unassigned',
+    );
+    // достаём из ответа сам список (или пустой, если null)
+    final raw = response.data ?? [];
+    // приводим элементы к Map<String, dynamic> и парсим
+    return raw.cast<Map<String, dynamic>>().map((e) => EventModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<void> assignLeader(int eventId, int leaderId) async {
+    // просто ждём, мы ничего не парсим
+    await _dio.put(
+      '/events/$eventId/leader/$leaderId',
+    );
   }
 }

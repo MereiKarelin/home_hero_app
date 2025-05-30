@@ -1,6 +1,39 @@
 import 'package:flutter/material.dart';
 
 class DColor {
+  static const MaterialColor primaryGreen = MaterialColor(
+    0xFF09A9FF,
+    <int, Color>{
+      50: Color(0xFFE6F9FF),
+      100: Color(0xFFC0F1FF),
+      200: Color(0xFF99E7FF),
+      300: Color(0xFF4DD5FF),
+      400: Color(0xFF26C9FF),
+      500: Color(0xFF09A9FF), // base
+      600: Color(0xFF0797E6),
+      700: Color(0xFF0587CC),
+      800: Color(0xFF0473B3),
+      900: Color(0xFF035080),
+    },
+  );
+
+  // Акцентный оранжевый
+  static const MaterialColor accentOrange = MaterialColor(
+    0xFFFFCF7D,
+    <int, Color>{
+      50: Color(0xFFFFFAF1),
+      100: Color(0xFFFFF1D9),
+      200: Color(0xFFFFE6B1),
+      300: Color(0xFFFFDB89),
+      400: Color(0xFFFFD26D),
+      500: Color(0xFFFFCF7D),
+      600: Color(0xFFE6B56F),
+      700: Color(0xFFCC9961),
+      800: Color(0xFFB38053),
+      900: Color(0xFF805235),
+    },
+  );
+
   static const Gradient primaryGreenGradient = LinearGradient(
     colors: [
       Color.fromRGBO(0, 123, 255, 1), // яркий синий

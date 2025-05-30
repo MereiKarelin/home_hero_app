@@ -3,6 +3,7 @@ import 'package:homehero/features/event/bloc/event_bloc.dart';
 import 'package:homehero/features/following/bloc/following_bloc.dart';
 import 'package:homehero/features/main/bloc/main_bloc.dart';
 import 'package:homehero/features/notification/bloc/notifications_bloc.dart';
+import 'package:homehero/features/subscription/bloc/subscription_bloc.dart';
 import 'package:homehero/utils/injectable/configurator.dart';
 
 class BlocUtils {
@@ -11,6 +12,7 @@ class BlocUtils {
   static final eventBloc = getIt.get<EventBloc>();
   static final follofingBloc = getIt.get<FollowingBloc>();
   static final notificationsBloc = getIt.get<NotificationsBloc>();
+  static final subscriptionBloc = getIt.get<SubscriptionBloc>();
 }
 
 enum Status { success, loading, error }

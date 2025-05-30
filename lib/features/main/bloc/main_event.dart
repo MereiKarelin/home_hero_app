@@ -21,3 +21,9 @@ class SearchByDateEvent extends MainEvent {
 
   const SearchByDateEvent({required this.year, required this.mouth});
 }
+
+class AssignLeader extends MainEvent {
+  final int eventId;
+
+  const AssignLeader(this.eventId);
+}

@@ -3,6 +3,7 @@ import 'package:homehero/features/core/d_color.dart';
 import 'package:homehero/features/core/d_text_style.dart';
 import 'package:homehero/features/main/bloc/main_bloc.dart';
 import 'package:homehero/features/main/widgets/followers_widget.dart';
+import 'package:homehero/features/subscription/subscription_select_screen.dart';
 import 'package:homehero/utils/app_router.gr.dart';
 import 'package:homehero/utils/bloc_utils.dart';
 import 'package:homehero/utils/injectable/configurator.dart';
@@ -74,10 +75,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         children: [
                           state.userType == "LEADING"
                               ? Text(
-                                  'Ведущий',
+                                  'Worker',
                                   style: DTextStyle.boldBlackText.copyWith(color: DColor.greenColor, fontSize: 12),
                                 )
-                              : Text('Ведомый', style: DTextStyle.boldBlackText.copyWith(color: DColor.greenColor, fontSize: 12)),
+                              : Text('Client', style: DTextStyle.boldBlackText.copyWith(color: DColor.greenColor, fontSize: 12)),
                           const SizedBox(
                             width: 4,
                           ),
@@ -189,20 +190,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           decoration: BoxDecoration(
                             color: DColor.greyUnselectedColor,
                           )),
+
                       ListTile(
                         leading: SvgPicture.asset('assets/exstra.svg'),
                         title: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'Экстренно ',
+                              'Подписка',
                               style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
                             ),
-                            if (state.todayExtraEvents.isNotEmpty)
-                              Text(
-                                state.todayExtraEvents.length.toString(),
-                                style: DTextStyle.blueText.copyWith(fontSize: 12),
-                              ),
                           ],
                         ),
                         trailing: Icon(
@@ -211,7 +208,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                         onTap: () {
                           Navigator.pop(context);
-                          AutoRouter.of(context).push(UncomingEventsRoute());
+                          AutoRouter.of(context).push(SubscriptionSelectionRoute());
                           // Navigate to Home screen
                           // Navigator.pushReplacementNamed(context, '/home');
                         },

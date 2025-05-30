@@ -232,32 +232,32 @@ class _ExtraEventScreenState extends State<ExtraEventScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Container(
-                            // height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: DColor.unselectedColor,
-                            ),
-                            child: Row(
-                              children: [
-                                Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 13, top: 5),
-                                    child: Text(
-                                      'Обьект',
-                                      style: DTextStyle.primaryText.copyWith(color: DColor.greyUnselectedColor, fontWeight: FontWeight.w700, fontSize: 11),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 13, top: 5, bottom: 5),
-                                    child: Text(
-                                      '${widget.userInfoModel.name}\n${widget.userInfoModel.address}\n${widget.userInfoModel.location}',
-                                      style: DTextStyle.primaryText.copyWith(fontSize: 14),
-                                    ),
-                                  ),
-                                ]),
-                              ],
-                            )),
+                        // Container(
+                        //     // height: 60,
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(12),
+                        //       color: DColor.unselectedColor,
+                        //     ),
+                        //     child: Row(
+                        //       children: [
+                        //         Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        //           Padding(
+                        //             padding: const EdgeInsets.only(left: 13, top: 5),
+                        //             child: Text(
+                        //               'Обьект',
+                        //               style: DTextStyle.primaryText.copyWith(color: DColor.greyUnselectedColor, fontWeight: FontWeight.w700, fontSize: 11),
+                        //             ),
+                        //           ),
+                        //           Padding(
+                        //             padding: const EdgeInsets.only(left: 13, top: 5, bottom: 5),
+                        //             child: Text(
+                        //               '${widget.userInfoModel.name}\n${widget.userInfoModel.address}\n${widget.userInfoModel.location}',
+                        //               style: DTextStyle.primaryText.copyWith(fontSize: 14),
+                        //             ),
+                        //           ),
+                        //         ]),
+                        //       ],
+                        //     )),
                         const SizedBox(height: 20),
                         DCustomTextLableField(
                           readOnly: false,
