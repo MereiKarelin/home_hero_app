@@ -42,8 +42,8 @@ class _UnboardingChooseScreenState extends State<UnboardingChooseScreen> {
           }),
         ),
         UnboardingThirdStep(
-          onTap: () => setState(() {
-            AutoRouter.of(context).push(AuthRoute(country: selectedCountry, userType: UserType.master, authType: authType ?? AuthType.registration));
+          onTap: (UserType userType) => setState(() {
+            AutoRouter.of(context).push(AuthRoute(country: selectedCountry, userType: userType, authType: authType ?? AuthType.registration));
           }),
         ),
       ],

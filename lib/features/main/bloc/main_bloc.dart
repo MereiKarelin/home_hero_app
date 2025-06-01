@@ -28,6 +28,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   final SetFirebaseToken setFirebaseToken;
   final GetUnassignedEventsUseCase getUnassignedEventsUseCase;
   final AssignLeaderUseCase assignLeaderUseCase;
+  bool first = true;
 
   MainBloc(this.getEventsByMounthUseCase, this.getFollowersUseCase, this.getUserUseCase, this.updateUserUseCase, this.setFirebaseToken,
       this.getUnassignedEventsUseCase, this.assignLeaderUseCase)
@@ -77,6 +78,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       final userName = sharedDb.getString('name');
       final id = sharedDb.getInt('id');
       final user = await getUserUseCase(GetUserUseCaseParams(id: id.toString()));
+      await tryToSendFirebaseToken();
       emit(state.copyWith(
           calendarStatus: Status.success,
           status: Status.success,
@@ -97,6 +99,19 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       emit(state.copyWith(
         status: Status.error,
       ));
+    }
+  }
+
+  Future<void> tryToSendFirebaseToken() async {
+    try {
+      if (first) {
+        final firebaseMessaging = NotificationService();
+        final token = await firebaseMessaging.getFcmToken();
+        await setFirebaseToken(SetFirebaseTokenParams(token: token));
+        first = false;
+      }
+    } catch (err) {
+      print(err);
     }
   }
 

@@ -1,0 +1,2 @@
+/Users/mereymedgat/home_hero/android/app/.cxx/Debug/b4v4g5k2/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/mereymedgat/home_hero/android/app/.cxx/Debug/b4v4g5k2/armeabi-v7a/CMakeFiles/rebuild_cache.dir

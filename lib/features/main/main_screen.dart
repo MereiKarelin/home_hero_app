@@ -135,7 +135,7 @@ class _MainScreenState extends State<MainScreen> {
                         children: [
                           if (state.userType != 'LEADING')
                             DActionButton(
-                              text: 'Create event',
+                              text: 'Создать событие',
                               onTap: () {
                                 AutoRouter.of(context).push(AddEventRoute(isCreate: true));
                               },
@@ -150,7 +150,7 @@ class _MainScreenState extends State<MainScreen> {
                           if (state.userType != 'LEADING')
                             Expanded(
                               child: DActionButton(
-                                text: 'Create extra event',
+                                text: 'Создать экстренное',
                                 onTap: () {
                                   AutoRouter.of(context).push(ExtraEventRoute(
                                     isCreate: true,

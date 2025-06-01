@@ -39,7 +39,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _authRegister(AuthRegisterEvent event, Emitter<AuthState> emit) async {
     try {
-      await registrationUseCase(RegistrationUseCaseParams(number: event.number, name: event.name));
+      await registrationUseCase(
+          RegistrationUseCaseParams(number: event.number, name: event.name, userType: event.userType == UserType.master ? 'LEADING' : 'FOLLOWING'));
       // You may want to emit a state here if needed.
     } catch (e) {
       emit(AuthErrorState(error: e.toString()));

@@ -9,7 +9,7 @@ import 'package:flutter_svg/svg.dart';
 // ignore: must_be_immutable
 class UnboardingThirdStep extends StatefulWidget {
   AuthType? authType;
-  final Function() onTap;
+  final Function(UserType userType) onTap;
   UnboardingThirdStep({super.key, required this.onTap, this.authType});
 
   @override
@@ -121,7 +121,7 @@ class _UnboardingChooseScreenState extends State<UnboardingThirdStep> {
               text: 'Далее',
               onTap: () {
                 if (selectedRole != null) {
-                  widget.onTap();
+                  widget.onTap(selectedRole == 'leader' ? UserType.master : UserType.user);
                 }
               },
             ),

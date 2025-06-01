@@ -12,7 +12,7 @@ abstract class AuthDataSource {
   Future<void> login(
     String number,
   );
-  Future<void> registration(String number, String name);
+  Future<void> registration(String number, String name, String userType);
 }
 
 @LazySingleton(as: AuthDataSource)
@@ -36,8 +36,8 @@ class AuthDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<void> registration(String number, String name) async {
-    await _dio.post('/auth/register', data: {'number': number, 'name': name});
+  Future<void> registration(String number, String name, String userType) async {
+    await _dio.post('/auth/register', data: {'number': number, 'name': name, 'userType': userType});
   }
 
   @override

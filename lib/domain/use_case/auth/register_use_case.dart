@@ -5,7 +5,8 @@ import 'package:injectable/injectable.dart';
 class RegistrationUseCaseParams {
   final String number;
   final String name;
-  RegistrationUseCaseParams({required this.number, required this.name});
+  final String userType;
+  RegistrationUseCaseParams({required this.number, required this.name, required this.userType});
 }
 
 @lazySingleton
@@ -18,6 +19,6 @@ class RegistrationUseCase implements UseCase<void, RegistrationUseCaseParams> {
 
   @override
   Future<void> call(RegistrationUseCaseParams params) async {
-    return await repository.registration(params.number, params.name);
+    return await repository.registration(params.number, params.name, params.userType);
   }
 }

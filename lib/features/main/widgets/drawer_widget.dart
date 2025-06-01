@@ -190,29 +190,29 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           decoration: BoxDecoration(
                             color: DColor.greyUnselectedColor,
                           )),
-
-                      ListTile(
-                        leading: SvgPicture.asset('assets/exstra.svg'),
-                        title: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Подписка',
-                              style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                            ),
-                          ],
+                      if (state.userType == 'FOLLOWING')
+                        ListTile(
+                          leading: SvgPicture.asset('assets/exstra.svg'),
+                          title: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Подписка',
+                                style: DTextStyle.primaryText.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                          trailing: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 15,
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                            AutoRouter.of(context).push(SubscriptionSelectionRoute());
+                            // Navigate to Home screen
+                            // Navigator.pushReplacementNamed(context, '/home');
+                          },
                         ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: 15,
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          AutoRouter.of(context).push(SubscriptionSelectionRoute());
-                          // Navigate to Home screen
-                          // Navigator.pushReplacementNamed(context, '/home');
-                        },
-                      ),
                       Container(
                           height: 0.2,
                           decoration: BoxDecoration(
@@ -280,7 +280,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           decoration: BoxDecoration(
                             color: DColor.greyUnselectedColor,
                           )),
-                      if (state.userType == "LEADING")
+                      if (state.userType == 'FOLLOWING')
                         ListTile(
                           leading: SvgPicture.asset('assets/check.svg'),
                           title: Text(

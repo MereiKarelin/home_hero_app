@@ -26,5 +26,5 @@ class AuthRepoImpl implements AuthRepo {
       );
 
   @override
-  Future<void> registration(String number, String name) async => await authDataSource.registration(number, name);
+  Future<void> registration(String number, String name, String userType) async => await authDataSource.registration(number, name, userType);
 }

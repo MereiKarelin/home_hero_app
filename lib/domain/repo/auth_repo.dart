@@ -9,5 +9,6 @@ abstract class AuthRepo {
   Future<void> registration(
     String number,
     String name,
+    String userType,
   );
 }

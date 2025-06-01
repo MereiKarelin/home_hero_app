@@ -11,7 +11,12 @@ class UnboardingFirstStep extends StatefulWidget {
   AuthType? authType;
   final Function() onTap;
   final Function(AuthType authType) onChangeAuthType;
-  UnboardingFirstStep({super.key, required this.onTap, this.authType, required this.onChangeAuthType});
+  UnboardingFirstStep({
+    super.key,
+    required this.onTap,
+    this.authType,
+    required this.onChangeAuthType,
+  });
 
   @override
   State<UnboardingFirstStep> createState() => _UnboardingChooseScreenState();
@@ -20,85 +25,80 @@ class UnboardingFirstStep extends StatefulWidget {
 class _UnboardingChooseScreenState extends State<UnboardingFirstStep> {
   bool first = false;
   bool second = false;
-  int pageIndex = 0;
-  // AuthType? authType;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(
-              flex: 3,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(90),
+          child: Center(
+            child: Image(
+              image: AssetImage('assets/logo/app_icon.png'),
+              height: 80,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image(
-                  image: AssetImage('assets/logo/app_icon.png'),
-                  height: 120,
-                ),
-              ],
+          )),
+      body: Column(
+        children: [
+          // Верхняя часть с картинкой, занимает 50% высоты экрана
+          Expanded(
+            flex: 2,
+            child: Image.asset(
+              'assets/images/unboarding_theme.png',
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
-            const SizedBox(
-              height: 10,
+          ),
+
+          // Нижняя часть с чекбоксами и кнопками, занимает оставшиеся 50%
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 24),
+                  PrivacyPolicyWidget(
+                    onTapFirst: () => setState(() => first = !first),
+                    onTapSecond: () => setState(() => second = !second),
+                    firstValue: first,
+                    secondValue: second,
+                  ),
+
+                  // Отступ между виджетами
+                  const Spacer(),
+
+                  // Кнопка «Регистрация»
+                  DCustomButton(
+                    gradient: first && second ? DColor.primaryGreenGradient : DColor.primaryGreenUnselectedGradient,
+                    text: 'Регистрация',
+                    onTap: () {
+                      if (first && second) {
+                        widget.onChangeAuthType(AuthType.registration);
+                        widget.onTap();
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // Кнопка «Авторизация»
+                  DCustomButton(
+                    color: first && second ? DColor.greyColor : DColor.greyUnselectedColor,
+                    text: 'Авторизация',
+                    onTap: () {
+                      if (first && second) {
+                        widget.onChangeAuthType(AuthType.login);
+                        widget.onTap();
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/unboarding_theme.png'),
-              ],
-            ),
-            const Spacer(
-              flex: 1,
-            ),
-            PrivacyPolicyWidget(
-              onTapFirst: () => setState(() {
-                first = !first;
-              }),
-              onTapSecond: () => setState(() {
-                second = !second;
-              }),
-              firstValue: first,
-              secondValue: second,
-            ),
-            const Spacer(
-              flex: 1,
-            ),
-            DCustomButton(
-              gradient: first && second ? DColor.primaryGreenGradient : DColor.primaryGreenUnselectedGradient,
-              text: 'Регистрация',
-              onTap: () {
-                if (first && second) {
-                  // authType = AuthType.registration;
-                  widget.onChangeAuthType(AuthType.registration);
-                  widget.onTap();
-                }
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            DCustomButton(
-              color: first && second ? DColor.greyColor : DColor.greyUnselectedColor,
-              text: 'Авторизация',
-              onTap: () {
-                if (first && second) {
-                  // authType = AuthType.login;
-                  widget.onChangeAuthType(AuthType.login);
-                  widget.onTap();
-                }
-              },
-            ),
-            const Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
