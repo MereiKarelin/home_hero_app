@@ -48,7 +48,7 @@ class _UnboardingChooseScreenState extends State<UnboardingThirdStep> {
               height: 10,
             ),
             Text(
-              'Выберите регион',
+              'Выберите роль',
               style: DTextStyle.boldBlackText.copyWith(fontSize: 28),
             ),
             const SizedBox(height: 12),

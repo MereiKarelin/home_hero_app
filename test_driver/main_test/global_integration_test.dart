@@ -20,6 +20,16 @@ void main() {
     test('Login', () async {
       await Future.delayed(const Duration(seconds: 4), () {});
 
+      await TestUtils.clickKey(
+        driver,
+        'сheckbox1',
+      );
+
+      await TestUtils.clickKey(
+        driver,
+        'сheckbox2',
+      );
+
       await TestUtils.clickName(
         driver,
         'Авторизоваться',
@@ -31,8 +41,51 @@ void main() {
 
       await TestUtils.clickName(
         driver,
-        'Авторизоваться',
+        'Выберите регион*',
       );
+
+      await TestUtils.clickName(
+        driver,
+        'Казахстан',
+      );
+
+      await TestUtils.clickKey(
+        driver,
+        'сheckbox2',
+      );
+
+      await TestUtils.clickName(
+        driver,
+        'Далее',
+      );
+    });
+
+    test('Login', () async {
+      await Future.delayed(const Duration(seconds: 4), () {});
+
+      await TestUtils.clickName(
+        driver,
+        'Worker',
+      );
+
+      await TestUtils.clickName(
+        driver,
+        'Далее',
+      );
+
+      await TestUtils.enterText(driver, TType.byKey, 'number', '0000000000');
+
+      await TestUtils.clickName(
+        driver,
+        'Далее',
+      );
+
+      await TestUtils.clickName(
+        driver,
+        'Получить код',
+      );
+
+      await TestUtils.enterText(driver, TType.byKey, 'code', '112233');
     });
   });
 }
